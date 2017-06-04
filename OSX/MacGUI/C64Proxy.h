@@ -521,6 +521,7 @@ class JoystickManager;
     long colorScheme;
 }
 
+@property (readonly) C64 *c64;
 @property (strong,readonly) MyMetalView *metalScreen;
 @property (readonly) CPUProxy *cpu;
 @property (readonly) MemoryProxy *mem;

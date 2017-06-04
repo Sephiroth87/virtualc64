@@ -46,8 +46,12 @@ enum INPUT_DEVICES {
 {
 	// Proxy object. Used get data from and sent data to the virtual C64
 	// Implements a bridge between C++ (simulator) and Objective-C (GUI)
+    // DEPRECATED. WILL USE C-API IN FUTURE
 	IBOutlet C64Proxy *__strong c64;
 	
+    // C-API to VirtualC64
+    VC64 *vc64;
+    
 	// JoystickManager
     // TODO: REMOVE
 	// JoystickManager *joystickManager;

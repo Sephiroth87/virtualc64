@@ -470,7 +470,8 @@
 	}	
 }
 
-- (IBAction)dumpC64:(id)sender { [c64 dump]; }
+// - (IBAction)dumpC64:(id)sender { [c64 dump]; }
+- (IBAction)dumpC64:(id)sender { NSLog(@"USING C API"); c64_dumpState(vc64); } // Experimental usage of C API
 - (IBAction)dumpC64CPU:(id)sender {	[[c64 cpu] dump]; }
 - (IBAction)dumpC64CIA1:(id)sender { [[c64 cia:1] dump]; }
 - (IBAction)dumpC64CIA2:(id)sender { [[c64 cia:2] dump]; }

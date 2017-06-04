@@ -78,6 +78,10 @@
     NSLog(@"    window   = %@", [self window]);
     NSLog(@"    document = %@", [self document]);
 
+    // Right now, we get the C64 object from the ObjProxy
+    // Later, use vc64_new from C API to create this object
+    vc64 = (VC64 *)[c64 c64];
+
     // Let the document know where the virtual C64 resides
     [[self document] setC64:c64];
     

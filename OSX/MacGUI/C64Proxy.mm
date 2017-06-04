@@ -607,7 +607,7 @@
 
 @implementation C64Proxy
 
-@synthesize cpu, mem, vic, cia1, cia2, sid, keyboard, iec, expansionport, vc1541, datasette;
+@synthesize c64, cpu, mem, vic, cia1, cia2, sid, keyboard, iec, expansionport, vc1541, datasette;
 @synthesize joystickA, joystickB; 
 @synthesize iecBusIsBusy, tapeBusIsBusy;
 

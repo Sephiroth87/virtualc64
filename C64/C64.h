@@ -484,9 +484,23 @@ public:
      */
     uint8_t getMissingRoms();
     
-    //! @brief    Loads ROM image into memory
+    /*! @brief    Loads ROM image into memory
+     *  @details  Works for all valid ROMs. Type is automatically detected.
+     */
     bool loadRom(const char *filename);
-    
+
+    //! @brief    Loads ROM image into memory if filename points to a valid Basic ROM file
+    bool loadBasicRom(const char *filename) { return mem.isBasicRom(filename) && loadRom(filename); }
+
+    //! @brief    Loads ROM image into memory if filename points to a valid Character ROM file
+    bool loadCharRom(const char *filename) { return mem.isCharRom(filename) && loadRom(filename); }
+
+    //! @brief    Loads ROM image into memory if filename points to a valid Kernel ROM file
+    bool loadKernelRom(const char *filename) { return mem.isKernelRom(filename) && loadRom(filename); }
+
+    //! @brief    Loads ROM image into memory if filename points to a valid VC1541 ROM file
+    bool loadVC1541Rom(const char *filename) { return floppy.mem.is1541Rom(filename) && loadRom(filename); }
+
     
     //
     //! @functiongroup Loading and saving snapshots

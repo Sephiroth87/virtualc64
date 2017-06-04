@@ -20,7 +20,8 @@
 
 @implementation MyDocument
 
-@synthesize c64;
+@synthesize c64; // DEPRECATED
+@synthesize vc64;
 @synthesize snapshot;
 @synthesize attachedArchive;
 @synthesize attachedTape;
@@ -109,7 +110,7 @@
 
 - (BOOL)detachCartridge
 {
-	[c64 detachCartridge];
+    c64_detachCartridge(vc64);
 	delete cartridge;
 	cartridge = NULL;
 	
@@ -118,22 +119,24 @@
 
 - (BOOL)loadRom:(NSString *)filename
 {
+    const char *name = [filename UTF8String];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	bool success = NO;
 	
-	if ([c64 loadBasicRom:filename]) {
+    assert(vc64 != NULL); 
+	if (c64_loadBasicRom(vc64, name)) {
 		[defaults setObject:filename forKey:VC64BasicRomFileKey];
 		success = YES;
 	}
-	else if ([c64 loadCharRom:filename]) {
+	else if (c64_loadCharRom(vc64, name)) {
 		[defaults setObject:filename forKey:VC64CharRomFileKey];
 		success = YES;
 	}
-	else if ([c64 loadKernelRom:filename]) {
+	else if (c64_loadKernelRom(vc64, name)) {
 		[defaults setObject:filename forKey:VC64KernelRomFileKey];
 		success = YES;
 	}
-	else if ([c64 loadVC1541Rom:filename]) {
+	else if (c64_loadVC1541Rom(vc64, name)) {
 		[defaults setObject:filename forKey:VC64VC1541RomFileKey];
 		success = YES;
 	}

@@ -83,7 +83,8 @@
     vc64 = (VC64 *)[c64 c64];
 
     // Let the document know where the virtual C64 resides
-    [[self document] setC64:c64];
+    [[self document] setC64:c64]; // DEPRECATED
+    [[self document] setVc64:vc64];
     
     // Setup window properties
     [self configureWindow];

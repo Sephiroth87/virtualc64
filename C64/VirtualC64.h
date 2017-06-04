@@ -92,6 +92,10 @@ extern "C" {
     uint8_t c64_getRasterlineCycle(VC64 *c64);
     uint8_t c64_getMissingRoms(VC64 *c64);
     bool c64_loadRom(VC64 *c64, const char *filename);
+    bool c64_loadBasicRom(VC64 *c64, const char *filename);
+    bool c64_loadCharRom(VC64 *c64, const char *filename);
+    bool c64_loadKernelRom(VC64 *c64, const char *filename);
+    bool c64_loadVC1541Rom(VC64 *c64, const char *filename);
     void c64_loadFromSnapshot(VC64 *c64, VC64_Snapshot *snapshot);
     void c64_saveToSnapshot(VC64 *c64, VC64_Snapshot *snapshot);
     void c64_takeSnapshot(VC64 *c64);

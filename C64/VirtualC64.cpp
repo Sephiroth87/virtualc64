@@ -69,6 +69,10 @@ extern "C" {
     uint8_t c64_getRasterlineCycle(VC64 *c64) { return reinterpret_cast<C64*>(c64)->getRasterlineCycle(); }
     uint8_t c64_getMissingRoms(VC64 *c64) { return reinterpret_cast<C64*>(c64)->getMissingRoms(); }
     bool c64_loadRom(VC64 *c64, const char *filename) { return reinterpret_cast<C64*>(c64)->loadRom(filename); }
+    bool c64_loadBasicRom(VC64 *c64, const char *filename) { return reinterpret_cast<C64*>(c64)->loadBasicRom(filename); }
+    bool c64_loadCharRom(VC64 *c64, const char *filename) { return reinterpret_cast<C64*>(c64)->loadCharRom(filename); }
+    bool c64_loadKernelRom(VC64 *c64, const char *filename) { return reinterpret_cast<C64*>(c64)->loadKernelRom(filename); }
+    bool c64_loadVC1541Rom(VC64 *c64, const char *filename) { return reinterpret_cast<C64*>(c64)->loadVC1541Rom(filename); }
     void c64_loadFromSnapshot(VC64 *c64, VC64_Snapshot *snapshot) {
         reinterpret_cast<C64*>(c64)->loadFromSnapshot(reinterpret_cast<Snapshot*>(snapshot)); }
     void c64_saveToSnapshot(VC64 *c64, VC64_Snapshot *snapshot) {

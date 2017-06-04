@@ -26,9 +26,10 @@ class Snapshot;
 
 @interface MyDocument : NSDocument
 {
-	// ObjC/C++ bridge
-	C64Proxy *__strong c64;
-
+	// Bridge to VirtualC64
+	C64Proxy *__strong c64; // DEPRECATED
+    VC64 *vc64;
+    
     //! Reference to an attached VC64 snapshot
     /*! When a new documents opens and this variable is not NULL, the snapshot is automatically flashed */
     Snapshot *snapshot; // TODO: Replace by SnapshotProxy
@@ -47,6 +48,7 @@ class Snapshot;
 }
 
 @property (strong) C64Proxy *c64;
+@property (assign) VC64 *vc64;
 @property (assign) Snapshot *snapshot;
 @property ArchiveProxy *attachedArchive;
 @property TAPContainerProxy *attachedTape;

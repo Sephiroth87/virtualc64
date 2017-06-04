@@ -135,9 +135,7 @@ extern "C"
     bool cpu_getV(VC64 *c64)  { return reinterpret_cast<C64*>(c64)->cpu.getV(); }
     void cpu_setV(VC64 *c64, bool b) { reinterpret_cast<C64*>(c64)->cpu.setV(b); }
     
-    // TODO: MOVE TO CPU CLASS
-    // - (uint16_t) peekPC { return cpu->mem->peek(cpu->getPC_at_cycle_0()); }
-    
+    uint16_t peekPC_at_cycle0(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.peekPC_at_cycle_0(); }
     uint8_t cpu_getLengthOfInstruction(VC64 *c64, uint8_t opcode) {
         return reinterpret_cast<C64*>(c64)->cpu.getLengthOfInstruction(opcode); }
     uint8_t cpu_getLengthOfInstructionAtAddress(VC64 *c64, uint16_t addr) {
@@ -148,10 +146,8 @@ extern "C"
         return reinterpret_cast<C64*>(c64)->cpu.getAddressOfNextInstruction(); }
     const char *cpu_getMnemonic(VC64 *c64, uint8_t opcode) {
         return reinterpret_cast<C64*>(c64)->cpu.getMnemonic(opcode); }
-    
-    // TODO: NEED C DATA TYPE. Add CPU_defs.h and use standard enums
-    // CPU::AddressingMode cpu_getAddressingMode(uint8_t opcode) { return cpu->getAddressingMode(opcode); }
-    
+    AddressingMode cpu_getAddressingMode(VC64 *c64, uint8_t opcode) {
+        return reinterpret_cast<C64*>(c64)->cpu.getAddressingMode(opcode); }
     int cpu_getTopOfCallStack(VC64 *c64) {
         return reinterpret_cast<C64*>(c64)->cpu.getTopOfCallStack(); }
     int cpu_getBreakpoint(VC64 *c64, int addr) {

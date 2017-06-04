@@ -311,6 +311,9 @@ public:
 	//! @brief    Returns current value of the memory cell addressed by the program counter.
 	inline uint8_t peekPC() { return mem->peek(PC); }
 
+    //! @brief    Returns current value of the memory cell addressed by the "freezed" program counter.
+    inline uint8_t peekPC_at_cycle_0() { return mem->peek(getPC_at_cycle_0()); }
+
 	//! @brief    Returns 1, if Negative flag is set, 0 otherwise.
 	inline uint8_t getN() { return (N ? N_FLAG : 0); }
     

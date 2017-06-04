@@ -25,7 +25,8 @@
 #ifndef VirtualC64_h
 #define VirtualC64_h
 
-#include <stdlib.h>
+#include <stdint.h>
+#include "CPU_defs.h"
 
 // From ReSID
 // enum chip_model { MOS6581, MOS8580 };
@@ -148,18 +149,13 @@ extern "C" {
     bool cpu_getV(VC64 *c64);
     void cpu_setV(VC64 *c64, bool b);
     
-    // TODO: MOVE TO CPU CLASS
-    // - (uint16_t) peekPC { return cpu->mem->peek(cpu->getPC_at_cycle_0()); }
-    
+    uint16_t peekPC_at_cycle0(VC64 *c64);
     uint8_t cpu_getLengthOfInstruction(VC64 *c64, uint8_t opcode);
     uint8_t cpu_getLengthOfInstructionAtAddress(VC64 *c64, uint16_t addr);
     uint8_t cpu_getLengthOfCurrentInstruction(VC64 *c64);
     uint16_t cpu_getAddressOfNextInstruction(VC64 *c64);
     const char *cpu_getMnemonic(VC64 *c64, uint8_t opcode);
-    
-    // TODO: NEED C DATA TYPE. Add CPU_defs.h and use standard enums
-    // CPU::AddressingMode cpu_getAddressingMode(uint8_t opcode) { return cpu->getAddressingMode(opcode); }
-    
+    AddressingMode cpu_getAddressingMode(VC64 *c64, uint8_t opcode);
     int cpu_getTopOfCallStack(VC64 *c64);
     int cpu_getBreakpoint(VC64 *c64, int addr);
     void cpu_setBreakpoint(VC64 *c64, int addr, uint8_t t);

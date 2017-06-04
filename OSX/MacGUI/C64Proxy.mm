@@ -66,7 +66,7 @@
 - (uint8_t) lengthOfCurrentInstruction { return cpu->getLengthOfCurrentInstruction(); }
 - (uint16_t) addressOfNextInstruction { return cpu->getAddressOfNextInstruction(); }
 - (const char *) mnemonic:(uint8_t)opcode { return cpu->getMnemonic(opcode); }
-- (CPU::AddressingMode) addressingMode:(uint8_t)opcode { return cpu->getAddressingMode(opcode); }
+- (AddressingMode) addressingMode:(uint8_t)opcode { return cpu->getAddressingMode(opcode); }
 
 - (int) topOfCallStack { return cpu->getTopOfCallStack(); }
 - (int) breakpoint:(int)addr { return cpu->getBreakpoint(addr); }

@@ -115,6 +115,62 @@ extern "C" {
     void c64_putCustomMessage(VC64 *c64, int id, int i, void *p, const char *c);
 
     
+    // -----------------------------------------------------------------------------------------------
+    //                                             CPU
+    // -----------------------------------------------------------------------------------------------
+
+    void cpu_dumpState(VC64 *c64);
+    bool cpu_tracingEnabled(VC64 *c64);
+    void cpu_setTraceMode(VC64 *c64, bool b);
+    
+    uint16_t cpu_getPC_at_cycle_0(VC64 *c64);
+    void cpu_setPC_at_cycle_0(VC64 *c64, uint16_t pc);
+    uint8_t cpu_getSP(VC64 *c64);
+    void cpu_setSP(VC64 *c64, uint8_t sp);
+    uint8_t cpu_getA(VC64 *c64);
+    void cpu_setA(VC64 *c64, uint8_t a);
+    uint8_t cpu_getX(VC64 *c64);
+    void cpu_setX(VC64 *c64, uint8_t x);
+    uint8_t cpu_getY(VC64 *c64);
+    void cpu_setY(VC64 *c64, uint8_t y);
+    bool cpu_getN(VC64 *c64);
+    void cpu_setN(VC64 *c64, bool b);
+    bool cpu_getZ(VC64 *c64);
+    void cpu_setZ(VC64 *c64, bool b);
+    bool cpu_getC(VC64 *c64);
+    void cpu_setC(VC64 *c64, bool b);
+    bool cpu_getI(VC64 *c64);
+    void cpu_setI(VC64 *c64, bool b);
+    bool cpu_getB(VC64 *c64);
+    void cpu_setB(VC64 *c64, bool b);
+    bool cpu_getD(VC64 *c64);
+    void cpu_setD(VC64 *c64, bool b);
+    bool cpu_getV(VC64 *c64);
+    void cpu_setV(VC64 *c64, bool b);
+    
+    // TODO: MOVE TO CPU CLASS
+    // - (uint16_t) peekPC { return cpu->mem->peek(cpu->getPC_at_cycle_0()); }
+    
+    uint8_t cpu_getLengthOfInstruction(VC64 *c64, uint8_t opcode);
+    uint8_t cpu_getLengthOfInstructionAtAddress(VC64 *c64, uint16_t addr);
+    uint8_t cpu_getLengthOfCurrentInstruction(VC64 *c64);
+    uint16_t cpu_getAddressOfNextInstruction(VC64 *c64);
+    const char *cpu_getMnemonic(VC64 *c64, uint8_t opcode);
+    
+    // TODO: NEED C DATA TYPE. Add CPU_defs.h and use standard enums
+    // CPU::AddressingMode cpu_getAddressingMode(uint8_t opcode) { return cpu->getAddressingMode(opcode); }
+    
+    int cpu_getTopOfCallStack(VC64 *c64);
+    int cpu_getBreakpoint(VC64 *c64, int addr);
+    void cpu_setBreakpoint(VC64 *c64, int addr, uint8_t t);
+    void cpu_setHardBreakpoint(VC64 *c64, int addr);
+    void cpu_seleteHardBreakpoint(VC64 *c64, int addr);
+    void cpu_toggleHardBreakpoint(VC64 *c64, int addr);
+    void cpu_setSoftBreakpoint(VC64 *c64, int addr);
+    void cpu_deleteSoftBreakpoint(VC64 *c64, int addr);
+    void cpu_toggleSoftBreakpoint(VC64 *c64, int addr);
+    
+    
 // -----------------------------------------------------------------------------------------------
 //                                             Message
 // -----------------------------------------------------------------------------------------------

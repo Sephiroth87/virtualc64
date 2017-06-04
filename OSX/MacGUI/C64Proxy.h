@@ -74,7 +74,7 @@ class JoystickManager;
 - (uint8_t) lengthOfCurrentInstruction;
 - (uint16_t) addressOfNextInstruction;
 - (const char *) mnemonic:(uint8_t)opcode;
-- (CPU::AddressingMode) addressingMode:(uint8_t)opcode;
+- (AddressingMode) addressingMode:(uint8_t)opcode;
 
 - (int) topOfCallStack;
 - (int) breakpoint:(int)addr;

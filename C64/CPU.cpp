@@ -24,14 +24,14 @@ CPU::CPU()
 	debug(3, "  Creating CPU at address %p...\n", this);
 	
     // Chip model
-    chipModel = MOS6510;
+    chipModel = CPU_MOS6510;
 
 	// Establish callback for each instruction
 	registerInstructions();
 		
 	// Clear all breakpoint tags
 	for (int i = 0; i <  65536; i++) {
-		breakpoint[i] = NO_BREAKPOINT;	
+		breakpoint[i] = CPU_NO_BREAKPOINT;
 	}
     
     // Register snapshot items
@@ -245,7 +245,7 @@ const char
 	return mnemonic[opcode];
 }
 
-CPU::AddressingMode 
+AddressingMode
 CPU::getAddressingMode(uint8_t opcode)
 {
 	return addressingMode[opcode];
@@ -255,22 +255,22 @@ int
 CPU::getLengthOfInstruction(uint8_t opcode)
 {
 	switch(addressingMode[opcode]) {
-		case ADDR_IMPLIED:			
-		case ADDR_ACCUMULATOR:
+		case CPU_ADDR_IMPLIED:
+		case CPU_ADDR_ACCUMULATOR:
 			return 1;
-		case ADDR_IMMEDIATE:
-		case ADDR_ZERO_PAGE:
-		case ADDR_ZERO_PAGE_X:
-		case ADDR_ZERO_PAGE_Y:
-		case ADDR_INDIRECT_X:
-		case ADDR_INDIRECT_Y:
-		case ADDR_RELATIVE:
+		case CPU_ADDR_IMMEDIATE:
+		case CPU_ADDR_ZERO_PAGE:
+		case CPU_ADDR_ZERO_PAGE_X:
+		case CPU_ADDR_ZERO_PAGE_Y:
+		case CPU_ADDR_INDIRECT_X:
+		case CPU_ADDR_INDIRECT_Y:
+		case CPU_ADDR_RELATIVE:
 			return 2;
-		case ADDR_ABSOLUTE:
-		case ADDR_ABSOLUTE_X:
-		case ADDR_ABSOLUTE_Y:
-		case ADDR_DIRECT:
-		case ADDR_INDIRECT:
+		case CPU_ADDR_ABSOLUTE:
+		case CPU_ADDR_ABSOLUTE_X:
+		case CPU_ADDR_ABSOLUTE_Y:
+		case CPU_ADDR_DIRECT:
+		case CPU_ADDR_INDIRECT:
 			return 3;
 	}
 	return 1;
@@ -324,22 +324,22 @@ CPU::disassemble()
 	
 	// Get operand as number
 	switch (addressingMode[opcode]) {
-		case CPU::ADDR_IMMEDIATE:
-		case CPU::ADDR_ZERO_PAGE:
-		case CPU::ADDR_ZERO_PAGE_X:
-		case CPU::ADDR_ZERO_PAGE_Y:
-		case CPU::ADDR_INDIRECT_X:
-		case CPU::ADDR_INDIRECT_Y:
+		case CPU_ADDR_IMMEDIATE:
+		case CPU_ADDR_ZERO_PAGE:
+		case CPU_ADDR_ZERO_PAGE_X:
+        case CPU_ADDR_ZERO_PAGE_Y:
+        case CPU_ADDR_INDIRECT_X:
+		case CPU_ADDR_INDIRECT_Y:
 			op = mem->peek(pc+1);
 			break;
-		case CPU::ADDR_DIRECT:			
-		case CPU::ADDR_INDIRECT:
-		case CPU::ADDR_ABSOLUTE:
-		case CPU::ADDR_ABSOLUTE_X:
-		case CPU::ADDR_ABSOLUTE_Y:
+		case CPU_ADDR_DIRECT:
+		case CPU_ADDR_INDIRECT:
+		case CPU_ADDR_ABSOLUTE:
+		case CPU_ADDR_ABSOLUTE_X:
+		case CPU_ADDR_ABSOLUTE_Y:
 			op = mem->peekWord(pc+1);
 			break;
-		case CPU::ADDR_RELATIVE:
+		case CPU_ADDR_RELATIVE:
 			op = pc + 2 + (int8_t)mem->peek(pc+1);
 			break;
 		default:
@@ -348,42 +348,42 @@ CPU::disassemble()
 	
 	// Format operand
 	switch (addressingMode[opcode]) {
-		case CPU::ADDR_IMPLIED:
-		case CPU::ADDR_ACCUMULATOR:
+		case CPU_ADDR_IMPLIED:
+		case CPU_ADDR_ACCUMULATOR:
 			sprintf(buf, " ");
 			break;
-		case CPU::ADDR_IMMEDIATE:					
+		case CPU_ADDR_IMMEDIATE:
 			sprintf(buf, "#%02X", op);
 			break;
-		case CPU::ADDR_ZERO_PAGE:	
+		case CPU_ADDR_ZERO_PAGE:
 			sprintf(buf, "%02X", op);
 			break;
-		case CPU::ADDR_ZERO_PAGE_X:	
+		case CPU_ADDR_ZERO_PAGE_X:
 			sprintf(buf, "%02X,X", op);
 			break;
-		case CPU::ADDR_ZERO_PAGE_Y:	
+		case CPU_ADDR_ZERO_PAGE_Y:
 			sprintf(buf, "%02X,Y", op);
 			break;
-		case CPU::ADDR_ABSOLUTE:	
-		case CPU::ADDR_DIRECT:
+		case CPU_ADDR_ABSOLUTE:
+		case CPU_ADDR_DIRECT:
 			sprintf(buf, "%04X", op);
 			break;
-		case CPU::ADDR_ABSOLUTE_X:	
+		case CPU_ADDR_ABSOLUTE_X:
 			sprintf(buf, "%04X,X", op);
 			break;
-		case CPU::ADDR_ABSOLUTE_Y:	
+		case CPU_ADDR_ABSOLUTE_Y:
 			sprintf(buf, "%04X,Y", op);
 			break;
-		case CPU::ADDR_INDIRECT:	
+        case CPU_ADDR_INDIRECT:
 			sprintf(buf, "(%04X)", op);
 			break;
-		case CPU::ADDR_INDIRECT_X:	
+		case CPU_ADDR_INDIRECT_X:
 			sprintf(buf, "(%04X,X)", op);
 			break;
-		case CPU::ADDR_INDIRECT_Y:	
+		case CPU_ADDR_INDIRECT_Y:
 			sprintf(buf, "(%04X),Y", op);
 			break;
-		case CPU::ADDR_RELATIVE:
+		case CPU_ADDR_RELATIVE:
 			sprintf(buf, "%04X", op);
 			break;
 		default:

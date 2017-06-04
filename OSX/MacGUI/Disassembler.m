@@ -53,56 +53,56 @@
 		
 	// Display instruction
 	switch ([[c64 cpu] addressingMode:opcode]) {
-		case CPU::ADDR_IMPLIED:
-		case CPU::ADDR_ACCUMULATOR:
+		case CPU_ADDR_IMPLIED:
+		case CPU_ADDR_ACCUMULATOR:
 			op = @"";
 			break;
-		case CPU::ADDR_IMMEDIATE:
-		case CPU::ADDR_ZERO_PAGE:
-		case CPU::ADDR_ZERO_PAGE_X:
-		case CPU::ADDR_ZERO_PAGE_Y:
-		case CPU::ADDR_INDIRECT_X:
-		case CPU::ADDR_INDIRECT_Y:
+		case CPU_ADDR_IMMEDIATE:
+		case CPU_ADDR_ZERO_PAGE:
+		case CPU_ADDR_ZERO_PAGE_X:
+		case CPU_ADDR_ZERO_PAGE_Y:
+		case CPU_ADDR_INDIRECT_X:
+		case CPU_ADDR_INDIRECT_Y:
 			op = [byteFormatter stringForObjectValue:@((int)[[c64 mem] peek:(addr+1)])];
 			break;
-		case CPU::ADDR_DIRECT:			
-		case CPU::ADDR_INDIRECT:
-		case CPU::ADDR_ABSOLUTE:
-		case CPU::ADDR_ABSOLUTE_X:
-		case CPU::ADDR_ABSOLUTE_Y:
+		case CPU_ADDR_DIRECT:
+		case CPU_ADDR_INDIRECT:
+		case CPU_ADDR_ABSOLUTE:
+		case CPU_ADDR_ABSOLUTE_X:
+		case CPU_ADDR_ABSOLUTE_Y:
             op = [wordFormatter stringForObjectValue:@((int)[[c64 mem] peekWord:(addr+1)])];
 			break;
-		case CPU::ADDR_RELATIVE:
+		case CPU_ADDR_RELATIVE:
 			op = [wordFormatter stringForObjectValue:@(addr+2+(int8_t)[[c64 mem] peek:(addr+1)])];
 			break;
 	}
 			
 	switch ([[c64 cpu] addressingMode:opcode]) {
-		case CPU::ADDR_IMPLIED:
-		case CPU::ADDR_ACCUMULATOR:
+		case CPU_ADDR_IMPLIED:
+		case CPU_ADDR_ACCUMULATOR:
 			return [NSString stringWithFormat:@"%s", mnemonic];
-		case CPU::ADDR_IMMEDIATE:					
+		case CPU_ADDR_IMMEDIATE:
 			return [NSString stringWithFormat:@"%s #%@", mnemonic, op];
-		case CPU::ADDR_ZERO_PAGE:	
+		case CPU_ADDR_ZERO_PAGE:
 			return [NSString stringWithFormat:@"%s %@", mnemonic, op];
-		case CPU::ADDR_ZERO_PAGE_X:	
+		case CPU_ADDR_ZERO_PAGE_X:
 			return [NSString stringWithFormat:@"%s %@,X", mnemonic, op];
-		case CPU::ADDR_ZERO_PAGE_Y:	
+		case CPU_ADDR_ZERO_PAGE_Y:
 			return [NSString stringWithFormat:@"%s %@,Y", mnemonic, op];
-		case CPU::ADDR_ABSOLUTE:	
-		case CPU::ADDR_DIRECT:
+		case CPU_ADDR_ABSOLUTE:
+		case CPU_ADDR_DIRECT:
 			return [NSString stringWithFormat:@"%s %@", mnemonic, op];
-		case CPU::ADDR_ABSOLUTE_X:	
+		case CPU_ADDR_ABSOLUTE_X:
 			return [NSString stringWithFormat:@"%s %@,X", mnemonic, op];
-		case CPU::ADDR_ABSOLUTE_Y:	
+        case CPU_ADDR_ABSOLUTE_Y:
 			return [NSString stringWithFormat:@"%s %@,Y", mnemonic, op];
-		case CPU::ADDR_INDIRECT:	
+		case CPU_ADDR_INDIRECT:
 			return [NSString stringWithFormat:@"%s (%@)", mnemonic, op];
-		case CPU::ADDR_INDIRECT_X:	
+		case CPU_ADDR_INDIRECT_X:
 			return [NSString stringWithFormat:@"%s (%@,X)", mnemonic, op];
-		case CPU::ADDR_INDIRECT_Y:	
+		case CPU_ADDR_INDIRECT_Y:
 			return [NSString stringWithFormat:@"%s (%@),Y", mnemonic, op];
-		case CPU::ADDR_RELATIVE:
+		case CPU_ADDR_RELATIVE:
 			return [NSString stringWithFormat:@"%s %@", mnemonic, op];
 	}
 	return @"???";

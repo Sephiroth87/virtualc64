@@ -101,6 +101,77 @@ extern "C"
     void c64_putCustomMessage(VC64 *c64, int id, int i, void *p, const char *c) {
         reinterpret_cast<C64*>(c64)->putMessage(id, i, p, c); }
 
+
+    // -----------------------------------------------------------------------------------------------
+    //                                             CPU
+    // -----------------------------------------------------------------------------------------------
+    
+    void cpu_dumpState(VC64 *c64) { reinterpret_cast<C64*>(c64)->cpu.dumpState(); }
+    bool cpu_tracingEnabled(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.tracingEnabled(); }
+    void cpu_setTraceMode(VC64 *c64, bool b) { reinterpret_cast<C64*>(c64)->cpu.setTraceMode(b); }
+    
+    uint16_t cpu_getPC_at_cycle_0(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.getPC_at_cycle_0(); }
+    void cpu_setPC_at_cycle_0(VC64 *c64, uint16_t pc) { reinterpret_cast<C64*>(c64)->cpu.setPC_at_cycle_0(pc); }
+    uint8_t cpu_getSP(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.getSP(); }
+    void cpu_setSP(VC64 *c64, uint8_t sp) { reinterpret_cast<C64*>(c64)->cpu.setSP(sp); }
+    uint8_t cpu_getA(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.getA(); }
+    void cpu_setA(VC64 *c64, uint8_t a) { reinterpret_cast<C64*>(c64)->cpu.setA(a); }
+    uint8_t cpu_getX(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.getX(); }
+    void cpu_setX(VC64 *c64, uint8_t x) { reinterpret_cast<C64*>(c64)->cpu.setX(x); }
+    uint8_t cpu_getY(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.getY(); }
+    void cpu_setY(VC64 *c64, uint8_t y) { reinterpret_cast<C64*>(c64)->cpu.setY(y); }
+    bool cpu_getN(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.getN(); }
+    void cpu_setN(VC64 *c64, bool b) { reinterpret_cast<C64*>(c64)->cpu.setN(b); }
+    bool cpu_getZ(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.getZ(); }
+    void cpu_setZ(VC64 *c64, bool b) { reinterpret_cast<C64*>(c64)->cpu.setZ(b); }
+    bool cpu_getC(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.getC(); }
+    void cpu_setC(VC64 *c64, bool b) { reinterpret_cast<C64*>(c64)->cpu.setC(b); }
+    bool cpu_getI(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.getI(); }
+    void cpu_setI(VC64 *c64, bool b) { reinterpret_cast<C64*>(c64)->cpu.setI(b); }
+    bool cpu_getB(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.getB(); }
+    void cpu_setB(VC64 *c64, bool b) { reinterpret_cast<C64*>(c64)->cpu.setB(b); }
+    bool cpu_getD(VC64 *c64) { return reinterpret_cast<C64*>(c64)->cpu.getD(); }
+    void cpu_setD(VC64 *c64, bool b) { reinterpret_cast<C64*>(c64)->cpu.setD(b); }
+    bool cpu_getV(VC64 *c64)  { return reinterpret_cast<C64*>(c64)->cpu.getV(); }
+    void cpu_setV(VC64 *c64, bool b) { reinterpret_cast<C64*>(c64)->cpu.setV(b); }
+    
+    // TODO: MOVE TO CPU CLASS
+    // - (uint16_t) peekPC { return cpu->mem->peek(cpu->getPC_at_cycle_0()); }
+    
+    uint8_t cpu_getLengthOfInstruction(VC64 *c64, uint8_t opcode) {
+        return reinterpret_cast<C64*>(c64)->cpu.getLengthOfInstruction(opcode); }
+    uint8_t cpu_getLengthOfInstructionAtAddress(VC64 *c64, uint16_t addr) {
+        return reinterpret_cast<C64*>(c64)->cpu.getLengthOfInstructionAtAddress(addr); }
+    uint8_t cpu_getLengthOfCurrentInstruction(VC64 *c64) {
+        return reinterpret_cast<C64*>(c64)->cpu.getLengthOfCurrentInstruction(); }
+    uint16_t cpu_getAddressOfNextInstruction(VC64 *c64) {
+        return reinterpret_cast<C64*>(c64)->cpu.getAddressOfNextInstruction(); }
+    const char *cpu_getMnemonic(VC64 *c64, uint8_t opcode) {
+        return reinterpret_cast<C64*>(c64)->cpu.getMnemonic(opcode); }
+    
+    // TODO: NEED C DATA TYPE. Add CPU_defs.h and use standard enums
+    // CPU::AddressingMode cpu_getAddressingMode(uint8_t opcode) { return cpu->getAddressingMode(opcode); }
+    
+    int cpu_getTopOfCallStack(VC64 *c64) {
+        return reinterpret_cast<C64*>(c64)->cpu.getTopOfCallStack(); }
+    int cpu_getBreakpoint(VC64 *c64, int addr) {
+        return reinterpret_cast<C64*>(c64)->cpu.getBreakpoint(addr); }
+    void cpu_setBreakpoint(VC64 *c64, int addr, uint8_t t) {
+        reinterpret_cast<C64*>(c64)->cpu.setBreakpoint(addr, t); }
+    void cpu_setHardBreakpoint(VC64 *c64, int addr) {
+        reinterpret_cast<C64*>(c64)->cpu.setHardBreakpoint(addr); }
+    void cpu_seleteHardBreakpoint(VC64 *c64, int addr) {
+        reinterpret_cast<C64*>(c64)->cpu.deleteHardBreakpoint(addr); }
+    void cpu_toggleHardBreakpoint(VC64 *c64, int addr) {
+        reinterpret_cast<C64*>(c64)->cpu.toggleHardBreakpoint(addr); }
+    void cpu_setSoftBreakpoint(VC64 *c64, int addr) {
+        reinterpret_cast<C64*>(c64)->cpu.setSoftBreakpoint(addr); }
+    void cpu_deleteSoftBreakpoint(VC64 *c64, int addr) {
+        reinterpret_cast<C64*>(c64)->cpu.deleteSoftBreakpoint(addr); }
+    void cpu_toggleSoftBreakpoint(VC64 *c64, int addr) {
+        reinterpret_cast<C64*>(c64)->cpu.toggleSoftBreakpoint(addr); }
+
+    
     
     // -----------------------------------------------------------------------------------------------
     //                                             Message

@@ -98,12 +98,12 @@ CPU::fetch() {
     */
     
 	// Check breakpoint tag
-	if (breakpoint[PC_at_cycle_0] != NO_BREAKPOINT) {
-		if (breakpoint[PC_at_cycle_0] & SOFT_BREAKPOINT) {
-			breakpoint[PC_at_cycle_0] &= ~SOFT_BREAKPOINT; // Soft breakpoints get deleted when reached
-			setErrorState(SOFT_BREAKPOINT_REACHED);
+	if (breakpoint[PC_at_cycle_0] != CPU_NO_BREAKPOINT) {
+		if (breakpoint[PC_at_cycle_0] & CPU_SOFT_BREAKPOINT) {
+			breakpoint[PC_at_cycle_0] &= ~CPU_SOFT_BREAKPOINT; // Soft breakpoints get deleted when reached
+			setErrorState(CPU_SOFT_BREAKPOINT_REACHED);
 		} else {
-			setErrorState(HARD_BREAKPOINT_REACHED);
+			setErrorState(CPU_HARD_BREAKPOINT_REACHED);
 		}
 		debug(1, "Breakpoint reached\n");
 	}
@@ -113,7 +113,7 @@ CPU::fetch() {
 void 
 CPU::registerCallback(uint8_t opcode, void (CPU::*func)())
 {
-	registerCallback(opcode, "???", ADDR_IMPLIED, func);
+    registerCallback(opcode, "???", CPU_ADDR_IMPLIED, func);
 }
 
 void 
@@ -131,117 +131,117 @@ CPU::registerCallback(uint8_t opcode, const char *mnc, AddressingMode mode, void
 void 
 CPU::registerIllegalInstructions()
 {
-	registerCallback(0x93, "SHA*", ADDR_INDIRECT_Y, &CPU::SHA_indirect_y);
-	registerCallback(0x9F, "SHA*", ADDR_ABSOLUTE_Y, &CPU::SHA_absolute_y);
+	registerCallback(0x93, "SHA*", CPU_ADDR_INDIRECT_Y, &CPU::SHA_indirect_y);
+	registerCallback(0x9F, "SHA*", CPU_ADDR_ABSOLUTE_Y, &CPU::SHA_absolute_y);
 
-	registerCallback(0x4B, "ALR*", ADDR_IMMEDIATE, &CPU::ALR_immediate);
+	registerCallback(0x4B, "ALR*", CPU_ADDR_IMMEDIATE, &CPU::ALR_immediate);
 
-	registerCallback(0x0B, "ANC*", ADDR_IMMEDIATE, &CPU::ANC_immediate);
-	registerCallback(0x2B, "ANC*", ADDR_IMMEDIATE, &CPU::ANC_immediate);
+	registerCallback(0x0B, "ANC*", CPU_ADDR_IMMEDIATE, &CPU::ANC_immediate);
+	registerCallback(0x2B, "ANC*", CPU_ADDR_IMMEDIATE, &CPU::ANC_immediate);
 	
-	registerCallback(0x8B, "ANE*", ADDR_IMMEDIATE, &CPU::ANE_immediate);
+	registerCallback(0x8B, "ANE*", CPU_ADDR_IMMEDIATE, &CPU::ANE_immediate);
 
-	registerCallback(0x6B, "ARR*", ADDR_IMMEDIATE, &CPU::ARR_immediate);
-	registerCallback(0xCB, "AXS*", ADDR_IMMEDIATE, &CPU::AXS_immediate);
+	registerCallback(0x6B, "ARR*", CPU_ADDR_IMMEDIATE, &CPU::ARR_immediate);
+	registerCallback(0xCB, "AXS*", CPU_ADDR_IMMEDIATE, &CPU::AXS_immediate);
 
-	registerCallback(0xC7, "DCP*", ADDR_ZERO_PAGE, &CPU::DCP_zero_page);
-	registerCallback(0xD7, "DCP*", ADDR_ZERO_PAGE_X, &CPU::DCP_zero_page_x);
-	registerCallback(0xC3, "DCP*", ADDR_INDIRECT_X, &CPU::DCP_indirect_x);
-	registerCallback(0xD3, "DCP*", ADDR_INDIRECT_Y, &CPU::DCP_indirect_y);
-	registerCallback(0xCF, "DCP*", ADDR_ABSOLUTE, &CPU::DCP_absolute);
-	registerCallback(0xDF, "DCP*", ADDR_ABSOLUTE_X, &CPU::DCP_absolute_x);
-	registerCallback(0xDB, "DCP*", ADDR_ABSOLUTE_Y, &CPU::DCP_absolute_y);
+	registerCallback(0xC7, "DCP*", CPU_ADDR_ZERO_PAGE, &CPU::DCP_zero_page);
+	registerCallback(0xD7, "DCP*", CPU_ADDR_ZERO_PAGE_X, &CPU::DCP_zero_page_x);
+	registerCallback(0xC3, "DCP*", CPU_ADDR_INDIRECT_X, &CPU::DCP_indirect_x);
+	registerCallback(0xD3, "DCP*", CPU_ADDR_INDIRECT_Y, &CPU::DCP_indirect_y);
+	registerCallback(0xCF, "DCP*", CPU_ADDR_ABSOLUTE, &CPU::DCP_absolute);
+	registerCallback(0xDF, "DCP*", CPU_ADDR_ABSOLUTE_X, &CPU::DCP_absolute_x);
+	registerCallback(0xDB, "DCP*", CPU_ADDR_ABSOLUTE_Y, &CPU::DCP_absolute_y);
 
-	registerCallback(0xE7, "ISC*", ADDR_ZERO_PAGE, &CPU::ISC_zero_page);
-	registerCallback(0xF7, "ISC*", ADDR_ZERO_PAGE_X, &CPU::ISC_zero_page_x);
-	registerCallback(0xE3, "ISC*", ADDR_INDIRECT_X, &CPU::ISC_indirect_x);
-	registerCallback(0xF3, "ISC*", ADDR_INDIRECT_Y, &CPU::ISC_indirect_y);
-	registerCallback(0xEF, "ISC*", ADDR_ABSOLUTE, &CPU::ISC_absolute);
-	registerCallback(0xFF, "ISC*", ADDR_ABSOLUTE_X, &CPU::ISC_absolute_x);
-	registerCallback(0xFB, "ISC*", ADDR_ABSOLUTE_Y, &CPU::ISC_absolute_y);
+	registerCallback(0xE7, "ISC*", CPU_ADDR_ZERO_PAGE, &CPU::ISC_zero_page);
+	registerCallback(0xF7, "ISC*", CPU_ADDR_ZERO_PAGE_X, &CPU::ISC_zero_page_x);
+	registerCallback(0xE3, "ISC*", CPU_ADDR_INDIRECT_X, &CPU::ISC_indirect_x);
+	registerCallback(0xF3, "ISC*", CPU_ADDR_INDIRECT_Y, &CPU::ISC_indirect_y);
+	registerCallback(0xEF, "ISC*", CPU_ADDR_ABSOLUTE, &CPU::ISC_absolute);
+	registerCallback(0xFF, "ISC*", CPU_ADDR_ABSOLUTE_X, &CPU::ISC_absolute_x);
+	registerCallback(0xFB, "ISC*", CPU_ADDR_ABSOLUTE_Y, &CPU::ISC_absolute_y);
 
-	registerCallback(0xBB, "LAS*", ADDR_ABSOLUTE_Y, &CPU::LAS_absolute_y);
+	registerCallback(0xBB, "LAS*", CPU_ADDR_ABSOLUTE_Y, &CPU::LAS_absolute_y);
 
-	registerCallback(0xA7, "LAX*", ADDR_ZERO_PAGE, &CPU::LAX_zero_page);
-	registerCallback(0xB7, "LAX*", ADDR_ZERO_PAGE_Y, &CPU::LAX_zero_page_y);
-	registerCallback(0xA3, "LAX*", ADDR_INDIRECT_X, &CPU::LAX_indirect_x);
-	registerCallback(0xB3, "LAX*", ADDR_INDIRECT_Y, &CPU::LAX_indirect_y);
-	registerCallback(0xAF, "LAX*", ADDR_ABSOLUTE, &CPU::LAX_absolute);
-	registerCallback(0xBF, "LAX*", ADDR_ABSOLUTE_Y, &CPU::LAX_absolute_y);
+	registerCallback(0xA7, "LAX*", CPU_ADDR_ZERO_PAGE, &CPU::LAX_zero_page);
+	registerCallback(0xB7, "LAX*", CPU_ADDR_ZERO_PAGE_Y, &CPU::LAX_zero_page_y);
+	registerCallback(0xA3, "LAX*", CPU_ADDR_INDIRECT_X, &CPU::LAX_indirect_x);
+	registerCallback(0xB3, "LAX*", CPU_ADDR_INDIRECT_Y, &CPU::LAX_indirect_y);
+	registerCallback(0xAF, "LAX*", CPU_ADDR_ABSOLUTE, &CPU::LAX_absolute);
+	registerCallback(0xBF, "LAX*", CPU_ADDR_ABSOLUTE_Y, &CPU::LAX_absolute_y);
 
-	registerCallback(0xAB, "LXA*", ADDR_IMMEDIATE, &CPU::LXA_immediate);
+	registerCallback(0xAB, "LXA*", CPU_ADDR_IMMEDIATE, &CPU::LXA_immediate);
 
-	registerCallback(0x80, "NOP*", ADDR_IMMEDIATE, &CPU::NOP_immediate);
-	registerCallback(0x82, "NOP*", ADDR_IMMEDIATE, &CPU::NOP_immediate);
-	registerCallback(0x89, "NOP*", ADDR_IMMEDIATE, &CPU::NOP_immediate);
-	registerCallback(0xC2, "NOP*", ADDR_IMMEDIATE, &CPU::NOP_immediate);	
-	registerCallback(0xE2, "NOP*", ADDR_IMMEDIATE, &CPU::NOP_immediate);
-	registerCallback(0x1A, "NOP*", ADDR_IMPLIED, &CPU::NOP);
-	registerCallback(0x3A, "NOP*", ADDR_IMPLIED, &CPU::NOP);
-	registerCallback(0x5A, "NOP*", ADDR_IMPLIED, &CPU::NOP);
-	registerCallback(0x7A, "NOP*", ADDR_IMPLIED, &CPU::NOP);
-	registerCallback(0xDA, "NOP*", ADDR_IMPLIED, &CPU::NOP);
-	registerCallback(0xFA, "NOP*", ADDR_IMPLIED, &CPU::NOP);
-	registerCallback(0x04, "NOP*", ADDR_ZERO_PAGE, &CPU::NOP_zero_page);
-	registerCallback(0x44, "NOP*", ADDR_ZERO_PAGE, &CPU::NOP_zero_page);
-	registerCallback(0x64, "NOP*", ADDR_ZERO_PAGE, &CPU::NOP_zero_page);
-	registerCallback(0x0C, "NOP*", ADDR_ABSOLUTE, &CPU::NOP_absolute);
-	registerCallback(0x14, "NOP*", ADDR_ZERO_PAGE_X, &CPU::NOP_zero_page_x);
-	registerCallback(0x34, "NOP*", ADDR_ZERO_PAGE_X, &CPU::NOP_zero_page_x);
-	registerCallback(0x54, "NOP*", ADDR_ZERO_PAGE_X, &CPU::NOP_zero_page_x);
-	registerCallback(0x74, "NOP*", ADDR_ZERO_PAGE_X, &CPU::NOP_zero_page_x);
-	registerCallback(0xD4, "NOP*", ADDR_ZERO_PAGE_X, &CPU::NOP_zero_page_x);
-	registerCallback(0xF4, "NOP*", ADDR_ZERO_PAGE_X, &CPU::NOP_zero_page_x);
-	registerCallback(0x1C, "NOP*", ADDR_ABSOLUTE_X, &CPU::NOP_absolute_x);
-	registerCallback(0x3C, "NOP*", ADDR_ABSOLUTE_X, &CPU::NOP_absolute_x);
-	registerCallback(0x5C, "NOP*", ADDR_ABSOLUTE_X, &CPU::NOP_absolute_x);
-	registerCallback(0x7C, "NOP*", ADDR_ABSOLUTE_X, &CPU::NOP_absolute_x);
-	registerCallback(0xDC, "NOP*", ADDR_ABSOLUTE_X, &CPU::NOP_absolute_x);
-	registerCallback(0xFC, "NOP*", ADDR_ABSOLUTE_X, &CPU::NOP_absolute_x);
+	registerCallback(0x80, "NOP*", CPU_ADDR_IMMEDIATE, &CPU::NOP_immediate);
+	registerCallback(0x82, "NOP*", CPU_ADDR_IMMEDIATE, &CPU::NOP_immediate);
+	registerCallback(0x89, "NOP*", CPU_ADDR_IMMEDIATE, &CPU::NOP_immediate);
+	registerCallback(0xC2, "NOP*", CPU_ADDR_IMMEDIATE, &CPU::NOP_immediate);
+	registerCallback(0xE2, "NOP*", CPU_ADDR_IMMEDIATE, &CPU::NOP_immediate);
+	registerCallback(0x1A, "NOP*", CPU_ADDR_IMPLIED, &CPU::NOP);
+	registerCallback(0x3A, "NOP*", CPU_ADDR_IMPLIED, &CPU::NOP);
+	registerCallback(0x5A, "NOP*", CPU_ADDR_IMPLIED, &CPU::NOP);
+	registerCallback(0x7A, "NOP*", CPU_ADDR_IMPLIED, &CPU::NOP);
+	registerCallback(0xDA, "NOP*", CPU_ADDR_IMPLIED, &CPU::NOP);
+	registerCallback(0xFA, "NOP*", CPU_ADDR_IMPLIED, &CPU::NOP);
+	registerCallback(0x04, "NOP*", CPU_ADDR_ZERO_PAGE, &CPU::NOP_zero_page);
+	registerCallback(0x44, "NOP*", CPU_ADDR_ZERO_PAGE, &CPU::NOP_zero_page);
+	registerCallback(0x64, "NOP*", CPU_ADDR_ZERO_PAGE, &CPU::NOP_zero_page);
+	registerCallback(0x0C, "NOP*", CPU_ADDR_ABSOLUTE, &CPU::NOP_absolute);
+	registerCallback(0x14, "NOP*", CPU_ADDR_ZERO_PAGE_X, &CPU::NOP_zero_page_x);
+	registerCallback(0x34, "NOP*", CPU_ADDR_ZERO_PAGE_X, &CPU::NOP_zero_page_x);
+	registerCallback(0x54, "NOP*", CPU_ADDR_ZERO_PAGE_X, &CPU::NOP_zero_page_x);
+	registerCallback(0x74, "NOP*", CPU_ADDR_ZERO_PAGE_X, &CPU::NOP_zero_page_x);
+	registerCallback(0xD4, "NOP*", CPU_ADDR_ZERO_PAGE_X, &CPU::NOP_zero_page_x);
+	registerCallback(0xF4, "NOP*", CPU_ADDR_ZERO_PAGE_X, &CPU::NOP_zero_page_x);
+	registerCallback(0x1C, "NOP*", CPU_ADDR_ABSOLUTE_X, &CPU::NOP_absolute_x);
+	registerCallback(0x3C, "NOP*", CPU_ADDR_ABSOLUTE_X, &CPU::NOP_absolute_x);
+	registerCallback(0x5C, "NOP*", CPU_ADDR_ABSOLUTE_X, &CPU::NOP_absolute_x);
+	registerCallback(0x7C, "NOP*", CPU_ADDR_ABSOLUTE_X, &CPU::NOP_absolute_x);
+	registerCallback(0xDC, "NOP*", CPU_ADDR_ABSOLUTE_X, &CPU::NOP_absolute_x);
+	registerCallback(0xFC, "NOP*", CPU_ADDR_ABSOLUTE_X, &CPU::NOP_absolute_x);
 
-	registerCallback(0x27, "RLA*", ADDR_ZERO_PAGE, &CPU::RLA_zero_page);
-	registerCallback(0x37, "RLA*", ADDR_ZERO_PAGE_X, &CPU::RLA_zero_page_x);
-	registerCallback(0x23, "RLA*", ADDR_INDIRECT_X, &CPU::RLA_indirect_x);
-	registerCallback(0x33, "RLA*", ADDR_INDIRECT_Y, &CPU::RLA_indirect_y);
-	registerCallback(0x2F, "RLA*", ADDR_ABSOLUTE, &CPU::RLA_absolute);
-	registerCallback(0x3F, "RLA*", ADDR_ABSOLUTE_X, &CPU::RLA_absolute_x);
-	registerCallback(0x3B, "RLA*", ADDR_ABSOLUTE_Y, &CPU::RLA_absolute_y);
+	registerCallback(0x27, "RLA*", CPU_ADDR_ZERO_PAGE, &CPU::RLA_zero_page);
+	registerCallback(0x37, "RLA*", CPU_ADDR_ZERO_PAGE_X, &CPU::RLA_zero_page_x);
+	registerCallback(0x23, "RLA*", CPU_ADDR_INDIRECT_X, &CPU::RLA_indirect_x);
+	registerCallback(0x33, "RLA*", CPU_ADDR_INDIRECT_Y, &CPU::RLA_indirect_y);
+	registerCallback(0x2F, "RLA*", CPU_ADDR_ABSOLUTE, &CPU::RLA_absolute);
+	registerCallback(0x3F, "RLA*", CPU_ADDR_ABSOLUTE_X, &CPU::RLA_absolute_x);
+	registerCallback(0x3B, "RLA*", CPU_ADDR_ABSOLUTE_Y, &CPU::RLA_absolute_y);
 
-	registerCallback(0x67, "RRA*", ADDR_ZERO_PAGE, &CPU::RRA_zero_page);
-	registerCallback(0x77, "RRA*", ADDR_ZERO_PAGE_X, &CPU::RRA_zero_page_x);
-	registerCallback(0x63, "RRA*", ADDR_INDIRECT_X, &CPU::RRA_indirect_x);
-	registerCallback(0x73, "RRA*", ADDR_INDIRECT_Y, &CPU::RRA_indirect_y);
-	registerCallback(0x6F, "RRA*", ADDR_ABSOLUTE, &CPU::RRA_absolute);
-	registerCallback(0x7F, "RRA*", ADDR_ABSOLUTE_X, &CPU::RRA_absolute_x);
-	registerCallback(0x7B, "RRA*", ADDR_ABSOLUTE_Y, &CPU::RRA_absolute_y);
+	registerCallback(0x67, "RRA*", CPU_ADDR_ZERO_PAGE, &CPU::RRA_zero_page);
+	registerCallback(0x77, "RRA*", CPU_ADDR_ZERO_PAGE_X, &CPU::RRA_zero_page_x);
+	registerCallback(0x63, "RRA*", CPU_ADDR_INDIRECT_X, &CPU::RRA_indirect_x);
+	registerCallback(0x73, "RRA*", CPU_ADDR_INDIRECT_Y, &CPU::RRA_indirect_y);
+	registerCallback(0x6F, "RRA*", CPU_ADDR_ABSOLUTE, &CPU::RRA_absolute);
+	registerCallback(0x7F, "RRA*", CPU_ADDR_ABSOLUTE_X, &CPU::RRA_absolute_x);
+	registerCallback(0x7B, "RRA*", CPU_ADDR_ABSOLUTE_Y, &CPU::RRA_absolute_y);
 
-	registerCallback(0x87, "SAX*", ADDR_ZERO_PAGE, &CPU::SAX_zero_page);
-	registerCallback(0x97, "SAX*", ADDR_ZERO_PAGE_Y, &CPU::SAX_zero_page_y);
-	registerCallback(0x83, "SAX*", ADDR_INDIRECT_X, &CPU::SAX_indirect_x);
-	registerCallback(0x8F, "SAX*", ADDR_ABSOLUTE, &CPU::SAX_absolute);
+	registerCallback(0x87, "SAX*", CPU_ADDR_ZERO_PAGE, &CPU::SAX_zero_page);
+	registerCallback(0x97, "SAX*", CPU_ADDR_ZERO_PAGE_Y, &CPU::SAX_zero_page_y);
+	registerCallback(0x83, "SAX*", CPU_ADDR_INDIRECT_X, &CPU::SAX_indirect_x);
+	registerCallback(0x8F, "SAX*", CPU_ADDR_ABSOLUTE, &CPU::SAX_absolute);
 
-	registerCallback(0xEB, "SBC*", ADDR_IMMEDIATE, &CPU::SBC_immediate);
+	registerCallback(0xEB, "SBC*", CPU_ADDR_IMMEDIATE, &CPU::SBC_immediate);
 
-	registerCallback(0x9E, "SHX*", ADDR_ABSOLUTE_Y, &CPU::SHX_absolute_y);
-	registerCallback(0x9C, "SHY*", ADDR_ABSOLUTE_X, &CPU::SHY_absolute_x);
+	registerCallback(0x9E, "SHX*", CPU_ADDR_ABSOLUTE_Y, &CPU::SHX_absolute_y);
+	registerCallback(0x9C, "SHY*", CPU_ADDR_ABSOLUTE_X, &CPU::SHY_absolute_x);
 
-	registerCallback(0x07, "SLO*", ADDR_ZERO_PAGE, &CPU::SLO_zero_page);
-	registerCallback(0x17, "SLO*", ADDR_ZERO_PAGE_X, &CPU::SLO_zero_page_x);
-	registerCallback(0x03, "SLO*", ADDR_INDIRECT_X, &CPU::SLO_indirect_x);
-	registerCallback(0x13, "SLO*", ADDR_INDIRECT_Y, &CPU::SLO_indirect_y);
-	registerCallback(0x0F, "SLO*", ADDR_ABSOLUTE, &CPU::SLO_absolute);
-	registerCallback(0x1F, "SLO*", ADDR_ABSOLUTE_X, &CPU::SLO_absolute_x);
-	registerCallback(0x1B, "SLO*", ADDR_ABSOLUTE_Y, &CPU::SLO_absolute_y);
+	registerCallback(0x07, "SLO*", CPU_ADDR_ZERO_PAGE, &CPU::SLO_zero_page);
+	registerCallback(0x17, "SLO*", CPU_ADDR_ZERO_PAGE_X, &CPU::SLO_zero_page_x);
+	registerCallback(0x03, "SLO*", CPU_ADDR_INDIRECT_X, &CPU::SLO_indirect_x);
+	registerCallback(0x13, "SLO*", CPU_ADDR_INDIRECT_Y, &CPU::SLO_indirect_y);
+	registerCallback(0x0F, "SLO*", CPU_ADDR_ABSOLUTE, &CPU::SLO_absolute);
+	registerCallback(0x1F, "SLO*", CPU_ADDR_ABSOLUTE_X, &CPU::SLO_absolute_x);
+	registerCallback(0x1B, "SLO*", CPU_ADDR_ABSOLUTE_Y, &CPU::SLO_absolute_y);
 
-	registerCallback(0x47, "SRE*", ADDR_ZERO_PAGE, &CPU::SRE_zero_page);
-	registerCallback(0x57, "SRE*", ADDR_ZERO_PAGE_X, &CPU::SRE_zero_page_x);
-	registerCallback(0x43, "SRE*", ADDR_INDIRECT_X, &CPU::SRE_indirect_x);
-	registerCallback(0x53, "SRE*", ADDR_INDIRECT_Y, &CPU::SRE_indirect_y);
-	registerCallback(0x4F, "SRE*", ADDR_ABSOLUTE, &CPU::SRE_absolute);
-	registerCallback(0x5F, "SRE*", ADDR_ABSOLUTE_X, &CPU::SRE_absolute_x);
-	registerCallback(0x5B, "SRE*", ADDR_ABSOLUTE_Y, &CPU::SRE_absolute_y);
+	registerCallback(0x47, "SRE*", CPU_ADDR_ZERO_PAGE, &CPU::SRE_zero_page);
+	registerCallback(0x57, "SRE*", CPU_ADDR_ZERO_PAGE_X, &CPU::SRE_zero_page_x);
+	registerCallback(0x43, "SRE*", CPU_ADDR_INDIRECT_X, &CPU::SRE_indirect_x);
+	registerCallback(0x53, "SRE*", CPU_ADDR_INDIRECT_Y, &CPU::SRE_indirect_y);
+	registerCallback(0x4F, "SRE*", CPU_ADDR_ABSOLUTE, &CPU::SRE_absolute);
+	registerCallback(0x5F, "SRE*", CPU_ADDR_ABSOLUTE_X, &CPU::SRE_absolute_x);
+	registerCallback(0x5B, "SRE*", CPU_ADDR_ABSOLUTE_Y, &CPU::SRE_absolute_y);
 	
-	registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, &CPU::TAS_absolute_y);
+	registerCallback(0x9B, "TAS*", CPU_ADDR_ABSOLUTE_Y, &CPU::TAS_absolute_y);
 }
 
 	
@@ -250,189 +250,189 @@ void CPU::registerInstructions()
 	for (int i=0; i<256; i++)
 		registerCallback(i, &CPU::JAM);
 
-	registerCallback(0x69, "ADC", ADDR_IMMEDIATE, &CPU::ADC_immediate);
-	registerCallback(0x65, "ADC", ADDR_ZERO_PAGE, &CPU::ADC_zero_page);
-	registerCallback(0x75, "ADC", ADDR_ZERO_PAGE_X, &CPU::ADC_zero_page_x);
-	registerCallback(0x6D, "ADC", ADDR_ABSOLUTE, &CPU::ADC_absolute);
-	registerCallback(0x7D, "ADC", ADDR_ABSOLUTE_X, &CPU::ADC_absolute_x);
-	registerCallback(0x79, "ADC", ADDR_ABSOLUTE_Y, &CPU::ADC_absolute_y);
-	registerCallback(0x61, "ADC", ADDR_INDIRECT_X, &CPU::ADC_indirect_x);
-	registerCallback(0x71, "ADC", ADDR_INDIRECT_Y, &CPU::ADC_indirect_y);
+	registerCallback(0x69, "ADC", CPU_ADDR_IMMEDIATE, &CPU::ADC_immediate);
+	registerCallback(0x65, "ADC", CPU_ADDR_ZERO_PAGE, &CPU::ADC_zero_page);
+	registerCallback(0x75, "ADC", CPU_ADDR_ZERO_PAGE_X, &CPU::ADC_zero_page_x);
+	registerCallback(0x6D, "ADC", CPU_ADDR_ABSOLUTE, &CPU::ADC_absolute);
+	registerCallback(0x7D, "ADC", CPU_ADDR_ABSOLUTE_X, &CPU::ADC_absolute_x);
+	registerCallback(0x79, "ADC", CPU_ADDR_ABSOLUTE_Y, &CPU::ADC_absolute_y);
+	registerCallback(0x61, "ADC", CPU_ADDR_INDIRECT_X, &CPU::ADC_indirect_x);
+	registerCallback(0x71, "ADC", CPU_ADDR_INDIRECT_Y, &CPU::ADC_indirect_y);
 
-	registerCallback(0x29, "AND", ADDR_IMMEDIATE, &CPU::AND_immediate);
-	registerCallback(0x25, "AND", ADDR_ZERO_PAGE, &CPU::AND_zero_page);
-	registerCallback(0x35, "AND", ADDR_ZERO_PAGE_X, &CPU::AND_zero_page_x);
-	registerCallback(0x2D, "AND", ADDR_ABSOLUTE, &CPU::AND_absolute);
-	registerCallback(0x3D, "AND", ADDR_ABSOLUTE_X, &CPU::AND_absolute_x);
-	registerCallback(0x39, "AND", ADDR_ABSOLUTE_Y, &CPU::AND_absolute_y);
-	registerCallback(0x21, "AND", ADDR_INDIRECT_X, &CPU::AND_indirect_x);
-	registerCallback(0x31, "AND", ADDR_INDIRECT_Y, &CPU::AND_indirect_y);
+	registerCallback(0x29, "AND", CPU_ADDR_IMMEDIATE, &CPU::AND_immediate);
+	registerCallback(0x25, "AND", CPU_ADDR_ZERO_PAGE, &CPU::AND_zero_page);
+	registerCallback(0x35, "AND", CPU_ADDR_ZERO_PAGE_X, &CPU::AND_zero_page_x);
+	registerCallback(0x2D, "AND", CPU_ADDR_ABSOLUTE, &CPU::AND_absolute);
+	registerCallback(0x3D, "AND", CPU_ADDR_ABSOLUTE_X, &CPU::AND_absolute_x);
+	registerCallback(0x39, "AND", CPU_ADDR_ABSOLUTE_Y, &CPU::AND_absolute_y);
+	registerCallback(0x21, "AND", CPU_ADDR_INDIRECT_X, &CPU::AND_indirect_x);
+	registerCallback(0x31, "AND", CPU_ADDR_INDIRECT_Y, &CPU::AND_indirect_y);
 	
-	registerCallback(0x0A, "ASL", ADDR_ACCUMULATOR, &CPU::ASL_accumulator);
-	registerCallback(0x06, "ASL", ADDR_ZERO_PAGE, &CPU::ASL_zero_page);
-	registerCallback(0x16, "ASL", ADDR_ZERO_PAGE_X, &CPU::ASL_zero_page_x);
-	registerCallback(0x0E, "ASL", ADDR_ABSOLUTE, &CPU::ASL_absolute);
-	registerCallback(0x1E, "ASL", ADDR_ABSOLUTE_X, &CPU::ASL_absolute_x);
+	registerCallback(0x0A, "ASL", CPU_ADDR_ACCUMULATOR, &CPU::ASL_accumulator);
+	registerCallback(0x06, "ASL", CPU_ADDR_ZERO_PAGE, &CPU::ASL_zero_page);
+	registerCallback(0x16, "ASL", CPU_ADDR_ZERO_PAGE_X, &CPU::ASL_zero_page_x);
+	registerCallback(0x0E, "ASL", CPU_ADDR_ABSOLUTE, &CPU::ASL_absolute);
+	registerCallback(0x1E, "ASL", CPU_ADDR_ABSOLUTE_X, &CPU::ASL_absolute_x);
 	
-	registerCallback(0x90, "BCC", ADDR_RELATIVE, &CPU::BCC_relative);
-	registerCallback(0xB0, "BCS", ADDR_RELATIVE, &CPU::BCS_relative);
-	registerCallback(0xF0, "BEQ", ADDR_RELATIVE, &CPU::BEQ_relative);
+	registerCallback(0x90, "BCC", CPU_ADDR_RELATIVE, &CPU::BCC_relative);
+	registerCallback(0xB0, "BCS", CPU_ADDR_RELATIVE, &CPU::BCS_relative);
+	registerCallback(0xF0, "BEQ", CPU_ADDR_RELATIVE, &CPU::BEQ_relative);
 
-	registerCallback(0x24, "BIT", ADDR_ZERO_PAGE, &CPU::BIT_zero_page);
-	registerCallback(0x2C, "BIT", ADDR_ABSOLUTE, &CPU::BIT_absolute);
+	registerCallback(0x24, "BIT", CPU_ADDR_ZERO_PAGE, &CPU::BIT_zero_page);
+	registerCallback(0x2C, "BIT", CPU_ADDR_ABSOLUTE, &CPU::BIT_absolute);
 	
-	registerCallback(0x30, "BMI", ADDR_RELATIVE, &CPU::BMI_relative);
-	registerCallback(0xD0, "BNE", ADDR_RELATIVE, &CPU::BNE_relative);
-	registerCallback(0x10, "BPL", ADDR_RELATIVE, &CPU::BPL_relative);
-	registerCallback(0x00, "BRK", ADDR_IMPLIED, &CPU::BRK);
-	registerCallback(0x50, "BVC", ADDR_RELATIVE, &CPU::BVC_relative);
-	registerCallback(0x70, "BVS", ADDR_RELATIVE, &CPU::BVS_relative);
+	registerCallback(0x30, "BMI", CPU_ADDR_RELATIVE, &CPU::BMI_relative);
+	registerCallback(0xD0, "BNE", CPU_ADDR_RELATIVE, &CPU::BNE_relative);
+	registerCallback(0x10, "BPL", CPU_ADDR_RELATIVE, &CPU::BPL_relative);
+	registerCallback(0x00, "BRK", CPU_ADDR_IMPLIED, &CPU::BRK);
+	registerCallback(0x50, "BVC", CPU_ADDR_RELATIVE, &CPU::BVC_relative);
+	registerCallback(0x70, "BVS", CPU_ADDR_RELATIVE, &CPU::BVS_relative);
 
-	registerCallback(0x18, "CLC", ADDR_IMPLIED, &CPU::CLC);
-	registerCallback(0xD8, "CLD", ADDR_IMPLIED, &CPU::CLD);
-	registerCallback(0x58, "CLI", ADDR_IMPLIED, &CPU::CLI);
-	registerCallback(0xB8, "CLV", ADDR_IMPLIED, &CPU::CLV);
+	registerCallback(0x18, "CLC", CPU_ADDR_IMPLIED, &CPU::CLC);
+	registerCallback(0xD8, "CLD", CPU_ADDR_IMPLIED, &CPU::CLD);
+	registerCallback(0x58, "CLI", CPU_ADDR_IMPLIED, &CPU::CLI);
+	registerCallback(0xB8, "CLV", CPU_ADDR_IMPLIED, &CPU::CLV);
 
-	registerCallback(0xC9, "CMP", ADDR_IMMEDIATE, &CPU::CMP_immediate);
-	registerCallback(0xC5, "CMP", ADDR_ZERO_PAGE, &CPU::CMP_zero_page);
-	registerCallback(0xD5, "CMP", ADDR_ZERO_PAGE_X, &CPU::CMP_zero_page_x);
-	registerCallback(0xCD, "CMP", ADDR_ABSOLUTE, &CPU::CMP_absolute);
-	registerCallback(0xDD, "CMP", ADDR_ABSOLUTE_X, &CPU::CMP_absolute_x);
-	registerCallback(0xD9, "CMP", ADDR_ABSOLUTE_Y, &CPU::CMP_absolute_y);
-	registerCallback(0xC1, "CMP", ADDR_INDIRECT_X, &CPU::CMP_indirect_x);
-	registerCallback(0xD1, "CMP", ADDR_INDIRECT_Y, &CPU::CMP_indirect_y);
+	registerCallback(0xC9, "CMP", CPU_ADDR_IMMEDIATE, &CPU::CMP_immediate);
+	registerCallback(0xC5, "CMP", CPU_ADDR_ZERO_PAGE, &CPU::CMP_zero_page);
+	registerCallback(0xD5, "CMP", CPU_ADDR_ZERO_PAGE_X, &CPU::CMP_zero_page_x);
+	registerCallback(0xCD, "CMP", CPU_ADDR_ABSOLUTE, &CPU::CMP_absolute);
+	registerCallback(0xDD, "CMP", CPU_ADDR_ABSOLUTE_X, &CPU::CMP_absolute_x);
+	registerCallback(0xD9, "CMP", CPU_ADDR_ABSOLUTE_Y, &CPU::CMP_absolute_y);
+	registerCallback(0xC1, "CMP", CPU_ADDR_INDIRECT_X, &CPU::CMP_indirect_x);
+	registerCallback(0xD1, "CMP", CPU_ADDR_INDIRECT_Y, &CPU::CMP_indirect_y);
 
-	registerCallback(0xE0, "CPX", ADDR_IMMEDIATE, &CPU::CPX_immediate);
-	registerCallback(0xE4, "CPX", ADDR_ZERO_PAGE, &CPU::CPX_zero_page);
-	registerCallback(0xEC, "CPX", ADDR_ABSOLUTE, &CPU::CPX_absolute);
+	registerCallback(0xE0, "CPX", CPU_ADDR_IMMEDIATE, &CPU::CPX_immediate);
+	registerCallback(0xE4, "CPX", CPU_ADDR_ZERO_PAGE, &CPU::CPX_zero_page);
+	registerCallback(0xEC, "CPX", CPU_ADDR_ABSOLUTE, &CPU::CPX_absolute);
 
-	registerCallback(0xC0, "CPY", ADDR_IMMEDIATE, &CPU::CPY_immediate);
-	registerCallback(0xC4, "CPY", ADDR_ZERO_PAGE, &CPU::CPY_zero_page);
-	registerCallback(0xCC, "CPY", ADDR_ABSOLUTE, &CPU::CPY_absolute);
+	registerCallback(0xC0, "CPY", CPU_ADDR_IMMEDIATE, &CPU::CPY_immediate);
+	registerCallback(0xC4, "CPY", CPU_ADDR_ZERO_PAGE, &CPU::CPY_zero_page);
+	registerCallback(0xCC, "CPY", CPU_ADDR_ABSOLUTE, &CPU::CPY_absolute);
 
-	registerCallback(0xC6, "DEC", ADDR_ZERO_PAGE, &CPU::DEC_zero_page);
-	registerCallback(0xD6, "DEC", ADDR_ZERO_PAGE_X, &CPU::DEC_zero_page_x);
-	registerCallback(0xCE, "DEC", ADDR_ABSOLUTE, &CPU::DEC_absolute);
-	registerCallback(0xDE, "DEC", ADDR_ABSOLUTE_X, &CPU::DEC_absolute_x);
+	registerCallback(0xC6, "DEC", CPU_ADDR_ZERO_PAGE, &CPU::DEC_zero_page);
+	registerCallback(0xD6, "DEC", CPU_ADDR_ZERO_PAGE_X, &CPU::DEC_zero_page_x);
+	registerCallback(0xCE, "DEC", CPU_ADDR_ABSOLUTE, &CPU::DEC_absolute);
+	registerCallback(0xDE, "DEC", CPU_ADDR_ABSOLUTE_X, &CPU::DEC_absolute_x);
 
-	registerCallback(0xCA, "DEX", ADDR_IMPLIED, &CPU::DEX);
-	registerCallback(0x88, "DEY", ADDR_IMPLIED, &CPU::DEY);
+	registerCallback(0xCA, "DEX", CPU_ADDR_IMPLIED, &CPU::DEX);
+	registerCallback(0x88, "DEY", CPU_ADDR_IMPLIED, &CPU::DEY);
 	
-	registerCallback(0x49, "EOR", ADDR_IMMEDIATE, &CPU::EOR_immediate);
-	registerCallback(0x45, "EOR", ADDR_ZERO_PAGE, &CPU::EOR_zero_page);
-	registerCallback(0x55, "EOR", ADDR_ZERO_PAGE_X, &CPU::EOR_zero_page_x);
-	registerCallback(0x4D, "EOR", ADDR_ABSOLUTE, &CPU::EOR_absolute);
-	registerCallback(0x5D, "EOR", ADDR_ABSOLUTE_X, &CPU::EOR_absolute_x);
-	registerCallback(0x59, "EOR", ADDR_ABSOLUTE_Y, &CPU::EOR_absolute_y);
-	registerCallback(0x41, "EOR", ADDR_INDIRECT_X, &CPU::EOR_indirect_x);
-	registerCallback(0x51, "EOR", ADDR_INDIRECT_Y, &CPU::EOR_indirect_y);
+	registerCallback(0x49, "EOR", CPU_ADDR_IMMEDIATE, &CPU::EOR_immediate);
+	registerCallback(0x45, "EOR", CPU_ADDR_ZERO_PAGE, &CPU::EOR_zero_page);
+	registerCallback(0x55, "EOR", CPU_ADDR_ZERO_PAGE_X, &CPU::EOR_zero_page_x);
+	registerCallback(0x4D, "EOR", CPU_ADDR_ABSOLUTE, &CPU::EOR_absolute);
+	registerCallback(0x5D, "EOR", CPU_ADDR_ABSOLUTE_X, &CPU::EOR_absolute_x);
+	registerCallback(0x59, "EOR", CPU_ADDR_ABSOLUTE_Y, &CPU::EOR_absolute_y);
+	registerCallback(0x41, "EOR", CPU_ADDR_INDIRECT_X, &CPU::EOR_indirect_x);
+	registerCallback(0x51, "EOR", CPU_ADDR_INDIRECT_Y, &CPU::EOR_indirect_y);
 
-	registerCallback(0xE6, "INC", ADDR_ZERO_PAGE, &CPU::INC_zero_page);
-	registerCallback(0xF6, "INC", ADDR_ZERO_PAGE_X, &CPU::INC_zero_page_x);
-	registerCallback(0xEE, "INC", ADDR_ABSOLUTE, &CPU::INC_absolute);
-	registerCallback(0xFE, "INC", ADDR_ABSOLUTE_X, &CPU::INC_absolute_x);
+	registerCallback(0xE6, "INC", CPU_ADDR_ZERO_PAGE, &CPU::INC_zero_page);
+	registerCallback(0xF6, "INC", CPU_ADDR_ZERO_PAGE_X, &CPU::INC_zero_page_x);
+	registerCallback(0xEE, "INC", CPU_ADDR_ABSOLUTE, &CPU::INC_absolute);
+	registerCallback(0xFE, "INC", CPU_ADDR_ABSOLUTE_X, &CPU::INC_absolute_x);
 	
-	registerCallback(0xE8, "INX", ADDR_IMPLIED, &CPU::INX);
-	registerCallback(0xC8, "INY", ADDR_IMPLIED, &CPU::INY);
+	registerCallback(0xE8, "INX", CPU_ADDR_IMPLIED, &CPU::INX);
+	registerCallback(0xC8, "INY", CPU_ADDR_IMPLIED, &CPU::INY);
 
-	registerCallback(0x4C, "JMP", ADDR_DIRECT, &CPU::JMP_absolute);
-	registerCallback(0x6C, "JMP", ADDR_INDIRECT, &CPU::JMP_absolute_indirect);
+	registerCallback(0x4C, "JMP", CPU_ADDR_DIRECT, &CPU::JMP_absolute);
+	registerCallback(0x6C, "JMP", CPU_ADDR_INDIRECT, &CPU::JMP_absolute_indirect);
 
-	registerCallback(0x20, "JSR", ADDR_DIRECT, &CPU::JSR);
+	registerCallback(0x20, "JSR", CPU_ADDR_DIRECT, &CPU::JSR);
 
-	registerCallback(0xA9, "LDA", ADDR_IMMEDIATE, &CPU::LDA_immediate);
-	registerCallback(0xA5, "LDA", ADDR_ZERO_PAGE, &CPU::LDA_zero_page);
-	registerCallback(0xB5, "LDA", ADDR_ZERO_PAGE_X, &CPU::LDA_zero_page_x);
-	registerCallback(0xAD, "LDA", ADDR_ABSOLUTE, &CPU::LDA_absolute);
-	registerCallback(0xBD, "LDA", ADDR_ABSOLUTE_X, &CPU::LDA_absolute_x);
-	registerCallback(0xB9, "LDA", ADDR_ABSOLUTE_Y, &CPU::LDA_absolute_y);
-	registerCallback(0xA1, "LDA", ADDR_INDIRECT_X, &CPU::LDA_indirect_x);
-	registerCallback(0xB1, "LDA", ADDR_INDIRECT_Y, &CPU::LDA_indirect_y);
+	registerCallback(0xA9, "LDA", CPU_ADDR_IMMEDIATE, &CPU::LDA_immediate);
+	registerCallback(0xA5, "LDA", CPU_ADDR_ZERO_PAGE, &CPU::LDA_zero_page);
+	registerCallback(0xB5, "LDA", CPU_ADDR_ZERO_PAGE_X, &CPU::LDA_zero_page_x);
+	registerCallback(0xAD, "LDA", CPU_ADDR_ABSOLUTE, &CPU::LDA_absolute);
+	registerCallback(0xBD, "LDA", CPU_ADDR_ABSOLUTE_X, &CPU::LDA_absolute_x);
+	registerCallback(0xB9, "LDA", CPU_ADDR_ABSOLUTE_Y, &CPU::LDA_absolute_y);
+	registerCallback(0xA1, "LDA", CPU_ADDR_INDIRECT_X, &CPU::LDA_indirect_x);
+	registerCallback(0xB1, "LDA", CPU_ADDR_INDIRECT_Y, &CPU::LDA_indirect_y);
 
-	registerCallback(0xA2, "LDX", ADDR_IMMEDIATE, &CPU::LDX_immediate);
-	registerCallback(0xA6, "LDX", ADDR_ZERO_PAGE, &CPU::LDX_zero_page);
-	registerCallback(0xB6, "LDX", ADDR_ZERO_PAGE_Y,&CPU::LDX_zero_page_y);
-	registerCallback(0xAE, "LDX", ADDR_ABSOLUTE, &CPU::LDX_absolute);
-	registerCallback(0xBE, "LDX", ADDR_ABSOLUTE_Y, &CPU::LDX_absolute_y);
+	registerCallback(0xA2, "LDX", CPU_ADDR_IMMEDIATE, &CPU::LDX_immediate);
+	registerCallback(0xA6, "LDX", CPU_ADDR_ZERO_PAGE, &CPU::LDX_zero_page);
+	registerCallback(0xB6, "LDX", CPU_ADDR_ZERO_PAGE_Y,&CPU::LDX_zero_page_y);
+	registerCallback(0xAE, "LDX", CPU_ADDR_ABSOLUTE, &CPU::LDX_absolute);
+	registerCallback(0xBE, "LDX", CPU_ADDR_ABSOLUTE_Y, &CPU::LDX_absolute_y);
 
-	registerCallback(0xA0, "LDY", ADDR_IMMEDIATE, &CPU::LDY_immediate);
-	registerCallback(0xA4, "LDY", ADDR_ZERO_PAGE, &CPU::LDY_zero_page);
-	registerCallback(0xB4, "LDY", ADDR_ZERO_PAGE_X, &CPU::LDY_zero_page_x);
-	registerCallback(0xAC, "LDY", ADDR_ABSOLUTE, &CPU::LDY_absolute);
-	registerCallback(0xBC, "LDY", ADDR_ABSOLUTE_X, &CPU::LDY_absolute_x);
+	registerCallback(0xA0, "LDY", CPU_ADDR_IMMEDIATE, &CPU::LDY_immediate);
+	registerCallback(0xA4, "LDY", CPU_ADDR_ZERO_PAGE, &CPU::LDY_zero_page);
+	registerCallback(0xB4, "LDY", CPU_ADDR_ZERO_PAGE_X, &CPU::LDY_zero_page_x);
+	registerCallback(0xAC, "LDY", CPU_ADDR_ABSOLUTE, &CPU::LDY_absolute);
+	registerCallback(0xBC, "LDY", CPU_ADDR_ABSOLUTE_X, &CPU::LDY_absolute_x);
 	
-	registerCallback(0x4A, "LSR", ADDR_ACCUMULATOR, &CPU::LSR_accumulator);
-	registerCallback(0x46, "LSR", ADDR_ZERO_PAGE, &CPU::LSR_zero_page);
-	registerCallback(0x56, "LSR", ADDR_ZERO_PAGE_X, &CPU::LSR_zero_page_x);
-	registerCallback(0x4E, "LSR", ADDR_ABSOLUTE, &CPU::LSR_absolute);
-	registerCallback(0x5E, "LSR", ADDR_ABSOLUTE_X, &CPU::LSR_absolute_x);
+	registerCallback(0x4A, "LSR", CPU_ADDR_ACCUMULATOR, &CPU::LSR_accumulator);
+	registerCallback(0x46, "LSR", CPU_ADDR_ZERO_PAGE, &CPU::LSR_zero_page);
+	registerCallback(0x56, "LSR", CPU_ADDR_ZERO_PAGE_X, &CPU::LSR_zero_page_x);
+	registerCallback(0x4E, "LSR", CPU_ADDR_ABSOLUTE, &CPU::LSR_absolute);
+	registerCallback(0x5E, "LSR", CPU_ADDR_ABSOLUTE_X, &CPU::LSR_absolute_x);
 
-	registerCallback(0xEA, "NOP", ADDR_IMPLIED, &CPU::NOP);
+	registerCallback(0xEA, "NOP", CPU_ADDR_IMPLIED, &CPU::NOP);
 	
-	registerCallback(0x09, "ORA", ADDR_IMMEDIATE, &CPU::ORA_immediate);
-	registerCallback(0x05, "ORA", ADDR_ZERO_PAGE, &CPU::ORA_zero_page);
-	registerCallback(0x15, "ORA", ADDR_ZERO_PAGE_X, &CPU::ORA_zero_page_x);
-	registerCallback(0x0D, "ORA", ADDR_ABSOLUTE, &CPU::ORA_absolute);
-	registerCallback(0x1D, "ORA", ADDR_ABSOLUTE_X, &CPU::ORA_absolute_x);
-	registerCallback(0x19, "ORA", ADDR_ABSOLUTE_Y, &CPU::ORA_absolute_y);
-	registerCallback(0x01, "ORA", ADDR_INDIRECT_X, &CPU::ORA_indirect_x);
-	registerCallback(0x11, "ORA", ADDR_INDIRECT_Y, &CPU::ORA_indirect_y);
+	registerCallback(0x09, "ORA", CPU_ADDR_IMMEDIATE, &CPU::ORA_immediate);
+	registerCallback(0x05, "ORA", CPU_ADDR_ZERO_PAGE, &CPU::ORA_zero_page);
+	registerCallback(0x15, "ORA", CPU_ADDR_ZERO_PAGE_X, &CPU::ORA_zero_page_x);
+	registerCallback(0x0D, "ORA", CPU_ADDR_ABSOLUTE, &CPU::ORA_absolute);
+	registerCallback(0x1D, "ORA", CPU_ADDR_ABSOLUTE_X, &CPU::ORA_absolute_x);
+	registerCallback(0x19, "ORA", CPU_ADDR_ABSOLUTE_Y, &CPU::ORA_absolute_y);
+	registerCallback(0x01, "ORA", CPU_ADDR_INDIRECT_X, &CPU::ORA_indirect_x);
+	registerCallback(0x11, "ORA", CPU_ADDR_INDIRECT_Y, &CPU::ORA_indirect_y);
 
-	registerCallback(0x48, "PHA", ADDR_IMPLIED, &CPU::PHA);
-	registerCallback(0x08, "PHP", ADDR_IMPLIED, &CPU::PHP);
-	registerCallback(0x68, "PLA", ADDR_IMPLIED, &CPU::PLA);
-	registerCallback(0x28, "PLP", ADDR_IMPLIED, &CPU::PLP);
+	registerCallback(0x48, "PHA", CPU_ADDR_IMPLIED, &CPU::PHA);
+	registerCallback(0x08, "PHP", CPU_ADDR_IMPLIED, &CPU::PHP);
+	registerCallback(0x68, "PLA", CPU_ADDR_IMPLIED, &CPU::PLA);
+	registerCallback(0x28, "PLP", CPU_ADDR_IMPLIED, &CPU::PLP);
 
-	registerCallback(0x2A, "ROL", ADDR_ACCUMULATOR, &CPU::ROL_accumulator);
-	registerCallback(0x26, "ROL", ADDR_ZERO_PAGE, &CPU::ROL_zero_page);
-	registerCallback(0x36, "ROL", ADDR_ZERO_PAGE_X, &CPU::ROL_zero_page_x);
-	registerCallback(0x2E, "ROL", ADDR_ABSOLUTE, &CPU::ROL_absolute);
-	registerCallback(0x3E, "ROL", ADDR_ABSOLUTE_X, &CPU::ROL_absolute_x);
+	registerCallback(0x2A, "ROL", CPU_ADDR_ACCUMULATOR, &CPU::ROL_accumulator);
+	registerCallback(0x26, "ROL", CPU_ADDR_ZERO_PAGE, &CPU::ROL_zero_page);
+	registerCallback(0x36, "ROL", CPU_ADDR_ZERO_PAGE_X, &CPU::ROL_zero_page_x);
+	registerCallback(0x2E, "ROL", CPU_ADDR_ABSOLUTE, &CPU::ROL_absolute);
+	registerCallback(0x3E, "ROL", CPU_ADDR_ABSOLUTE_X, &CPU::ROL_absolute_x);
 
-	registerCallback(0x6A, "ROR", ADDR_ACCUMULATOR, &CPU::ROR_accumulator);
-	registerCallback(0x66, "ROR", ADDR_ZERO_PAGE, &CPU::ROR_zero_page);
-	registerCallback(0x76, "ROR", ADDR_ZERO_PAGE_X, &CPU::ROR_zero_page_x);
-	registerCallback(0x6E, "ROR", ADDR_ABSOLUTE, &CPU::ROR_absolute);
-	registerCallback(0x7E, "ROR", ADDR_ABSOLUTE_X, &CPU::ROR_absolute_x);
+	registerCallback(0x6A, "ROR", CPU_ADDR_ACCUMULATOR, &CPU::ROR_accumulator);
+	registerCallback(0x66, "ROR", CPU_ADDR_ZERO_PAGE, &CPU::ROR_zero_page);
+	registerCallback(0x76, "ROR", CPU_ADDR_ZERO_PAGE_X, &CPU::ROR_zero_page_x);
+	registerCallback(0x6E, "ROR", CPU_ADDR_ABSOLUTE, &CPU::ROR_absolute);
+	registerCallback(0x7E, "ROR", CPU_ADDR_ABSOLUTE_X, &CPU::ROR_absolute_x);
 	
-	registerCallback(0x40, "RTI", ADDR_IMPLIED, &CPU::RTI);
-	registerCallback(0x60, "RTS", ADDR_IMPLIED, &CPU::RTS);
+	registerCallback(0x40, "RTI", CPU_ADDR_IMPLIED, &CPU::RTI);
+	registerCallback(0x60, "RTS", CPU_ADDR_IMPLIED, &CPU::RTS);
 
-	registerCallback(0xE9, "SBC", ADDR_IMMEDIATE, &CPU::SBC_immediate);
-	registerCallback(0xE5, "SBC", ADDR_ZERO_PAGE, &CPU::SBC_zero_page);
-	registerCallback(0xF5, "SBC", ADDR_ZERO_PAGE_X, &CPU::SBC_zero_page_x);
-	registerCallback(0xED, "SBC", ADDR_ABSOLUTE, &CPU::SBC_absolute);
-	registerCallback(0xFD, "SBC", ADDR_ABSOLUTE_X, &CPU::SBC_absolute_x);
-	registerCallback(0xF9, "SBC", ADDR_ABSOLUTE_Y, &CPU::SBC_absolute_y);
-	registerCallback(0xE1, "SBC", ADDR_INDIRECT_X, &CPU::SBC_indirect_x);
-	registerCallback(0xF1, "SBC", ADDR_INDIRECT_Y, &CPU::SBC_indirect_y);	
+	registerCallback(0xE9, "SBC", CPU_ADDR_IMMEDIATE, &CPU::SBC_immediate);
+	registerCallback(0xE5, "SBC", CPU_ADDR_ZERO_PAGE, &CPU::SBC_zero_page);
+	registerCallback(0xF5, "SBC", CPU_ADDR_ZERO_PAGE_X, &CPU::SBC_zero_page_x);
+	registerCallback(0xED, "SBC", CPU_ADDR_ABSOLUTE, &CPU::SBC_absolute);
+	registerCallback(0xFD, "SBC", CPU_ADDR_ABSOLUTE_X, &CPU::SBC_absolute_x);
+	registerCallback(0xF9, "SBC", CPU_ADDR_ABSOLUTE_Y, &CPU::SBC_absolute_y);
+	registerCallback(0xE1, "SBC", CPU_ADDR_INDIRECT_X, &CPU::SBC_indirect_x);
+	registerCallback(0xF1, "SBC", CPU_ADDR_INDIRECT_Y, &CPU::SBC_indirect_y);	
 
-	registerCallback(0x38, "SEC", ADDR_IMPLIED, &CPU::SEC);	
-	registerCallback(0xF8, "SED", ADDR_IMPLIED, &CPU::SED);	
-	registerCallback(0x78, "SEI", ADDR_IMPLIED, &CPU::SEI);	
+	registerCallback(0x38, "SEC", CPU_ADDR_IMPLIED, &CPU::SEC);	
+	registerCallback(0xF8, "SED", CPU_ADDR_IMPLIED, &CPU::SED);	
+	registerCallback(0x78, "SEI", CPU_ADDR_IMPLIED, &CPU::SEI);	
 
-	registerCallback(0x85, "STA", ADDR_ZERO_PAGE, &CPU::STA_zero_page);
-	registerCallback(0x95, "STA", ADDR_ZERO_PAGE_X, &CPU::STA_zero_page_x);
-	registerCallback(0x8D, "STA", ADDR_ABSOLUTE, &CPU::STA_absolute);
-	registerCallback(0x9D, "STA", ADDR_ABSOLUTE_X, &CPU::STA_absolute_x);
-	registerCallback(0x99, "STA", ADDR_ABSOLUTE_Y, &CPU::STA_absolute_y);
-	registerCallback(0x81, "STA", ADDR_INDIRECT_X, &CPU::STA_indirect_x);
-	registerCallback(0x91, "STA", ADDR_INDIRECT_Y, &CPU::STA_indirect_y);
+	registerCallback(0x85, "STA", CPU_ADDR_ZERO_PAGE, &CPU::STA_zero_page);
+	registerCallback(0x95, "STA", CPU_ADDR_ZERO_PAGE_X, &CPU::STA_zero_page_x);
+	registerCallback(0x8D, "STA", CPU_ADDR_ABSOLUTE, &CPU::STA_absolute);
+	registerCallback(0x9D, "STA", CPU_ADDR_ABSOLUTE_X, &CPU::STA_absolute_x);
+	registerCallback(0x99, "STA", CPU_ADDR_ABSOLUTE_Y, &CPU::STA_absolute_y);
+	registerCallback(0x81, "STA", CPU_ADDR_INDIRECT_X, &CPU::STA_indirect_x);
+	registerCallback(0x91, "STA", CPU_ADDR_INDIRECT_Y, &CPU::STA_indirect_y);
 
-	registerCallback(0x86, "STX", ADDR_ZERO_PAGE, &CPU::STX_zero_page);
-	registerCallback(0x96, "STX", ADDR_ZERO_PAGE_Y, &CPU::STX_zero_page_y);
-	registerCallback(0x8E, "STX", ADDR_ABSOLUTE, &CPU::STX_absolute);
+	registerCallback(0x86, "STX", CPU_ADDR_ZERO_PAGE, &CPU::STX_zero_page);
+	registerCallback(0x96, "STX", CPU_ADDR_ZERO_PAGE_Y, &CPU::STX_zero_page_y);
+	registerCallback(0x8E, "STX", CPU_ADDR_ABSOLUTE, &CPU::STX_absolute);
 
-	registerCallback(0x84, "STY", ADDR_ZERO_PAGE, &CPU::STY_zero_page);
-	registerCallback(0x94, "STY", ADDR_ZERO_PAGE_X, &CPU::STY_zero_page_x);
-	registerCallback(0x8C, "STY", ADDR_ABSOLUTE, &CPU::STY_absolute);
+	registerCallback(0x84, "STY", CPU_ADDR_ZERO_PAGE, &CPU::STY_zero_page);
+	registerCallback(0x94, "STY", CPU_ADDR_ZERO_PAGE_X, &CPU::STY_zero_page_x);
+	registerCallback(0x8C, "STY", CPU_ADDR_ABSOLUTE, &CPU::STY_absolute);
 
-	registerCallback(0xAA, "TAX", ADDR_IMPLIED, &CPU::TAX);	
-	registerCallback(0xA8, "TAY", ADDR_IMPLIED, &CPU::TAY);	
-	registerCallback(0xBA, "TSX", ADDR_IMPLIED, &CPU::TSX);	
-	registerCallback(0x8A, "TXA", ADDR_IMPLIED, &CPU::TXA);	
-	registerCallback(0x9A, "TXS", ADDR_IMPLIED, &CPU::TXS);	
-	registerCallback(0x98, "TYA", ADDR_IMPLIED, &CPU::TYA);	
+	registerCallback(0xAA, "TAX", CPU_ADDR_IMPLIED, &CPU::TAX);	
+	registerCallback(0xA8, "TAY", CPU_ADDR_IMPLIED, &CPU::TAY);	
+	registerCallback(0xBA, "TSX", CPU_ADDR_IMPLIED, &CPU::TSX);	
+	registerCallback(0x8A, "TXA", CPU_ADDR_IMPLIED, &CPU::TXA);	
+	registerCallback(0x9A, "TXS", CPU_ADDR_IMPLIED, &CPU::TXS);	
+	registerCallback(0x98, "TYA", CPU_ADDR_IMPLIED, &CPU::TYA);	
 
 	// Register illegal instructions
 	registerIllegalInstructions();	
@@ -444,7 +444,7 @@ void CPU::registerInstructions()
 
 void CPU::JAM()
 {
-	setErrorState(ILLEGAL_INSTRUCTION);
+	setErrorState(CPU_ILLEGAL_INSTRUCTION);
 	next = &CPU::JAM_2;
 }
 
@@ -1497,7 +1497,7 @@ void CPU::BVC_relative()
 {	
 	READ_IMMEDIATE;
 
-    if (chipModel == MOS6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
+    if (chipModel == CPU_MOS6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
         
         // Special handling for the VC1541 CPU. Taken from Frodo
         if (!((c64->floppy.via2.io[12] & 0x0E) == 0x0E || getV())) {
@@ -1546,7 +1546,7 @@ void CPU::BVS_relative()
 {	
 	READ_IMMEDIATE;
     
-    if (chipModel == MOS6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
+    if (chipModel == CPU_MOS6502 /* Drive CPU */ && !c64->floppy.getBitAccuracy()) {
         
         // Special handling for the VC1541 CPU. Taken from Frodo
         if ((c64->floppy.via2.io[12] & 0x0E) == 0x0E || getV()) {
@@ -2580,7 +2580,7 @@ void CPU::JMP_absolute_indirect_3()
 void CPU::JMP_absolute_indirect_4()
 {
 	setPCL(data);	
-	setPCH(mem->peek(addr_lo+1, addr_hi)); 
+	setPCH(mem->peek(addr_lo+1, addr_hi));
 	DONE;
 }
 

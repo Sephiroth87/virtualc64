@@ -27,6 +27,7 @@
 
 #include <stdint.h>
 #include "CPU_defs.h"
+#include "ReSID_defs.h"
 
 // From ReSID
 // enum chip_model { MOS6581, MOS8580 };
@@ -69,10 +70,10 @@ extern "C" {
     void c64_setAudioFilter(VC64 *c64, bool value);
     bool c64_getReSID(VC64 *c64);
     void c64_setReSID(VC64 *c64, bool value);
-    // sampling_method c64_getSamplingMethod(VC64 *c64);
-    // void c64_setSamplingMethod(VC64 *c64, sampling_method value);
-    // chip_model c64_getChipModel(VC64 *c64);
-    // void c64_setChipModel(VC64 *c64, chip_model value);
+    SID_sampling_method c64_getSamplingMethod(VC64 *c64);
+    void c64_setSamplingMethod(VC64 *c64, SID_sampling_method value);
+    SID_chip_model c64_getChipModel(VC64 *c64);
+    void c64_setChipModel(VC64 *c64, SID_chip_model value);
     void c64_run(VC64 *c64);
     void c64_threadCleanup(VC64 *c64);
     bool c64_isRunnable(VC64 *c64);

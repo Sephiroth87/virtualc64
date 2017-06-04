@@ -25,6 +25,7 @@
 #define _RESID_INC
 
 #include "VirtualComponent.h"
+#include "ReSID_defs.h"
 #include "sid.h"
 
 class ReSID : public VirtualComponent {

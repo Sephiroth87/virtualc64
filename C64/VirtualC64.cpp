@@ -45,10 +45,10 @@ extern "C"
     void c64_setAudioFilter(VC64 *c64, bool value) { reinterpret_cast<C64*>(c64)->setAudioFilter(value); }
     bool c64_getReSID(VC64 *c64) { return reinterpret_cast<C64*>(c64)->getReSID(); }
     void c64_setReSID(VC64 *c64, bool value) { reinterpret_cast<C64*>(c64)->setReSID(value); }
-    sampling_method c64_getSamplingMethod(VC64 *c64) { return reinterpret_cast<C64*>(c64)->getSamplingMethod(); }
-    void c64_setSamplingMethod(VC64 *c64, sampling_method value) { reinterpret_cast<C64*>(c64)->setSamplingMethod(value); }
-    chip_model c64_getChipModel(VC64 *c64) { return reinterpret_cast<C64*>(c64)->getChipModel(); }
-    void c64_setChipModel(VC64 *c64, chip_model value) { reinterpret_cast<C64*>(c64)->setChipModel(value); }
+    SID_sampling_method c64_getSamplingMethod(VC64 *c64) { return (SID_sampling_method)(reinterpret_cast<C64*>(c64)->getSamplingMethod()); }
+    void c64_setSamplingMethod(VC64 *c64, SID_sampling_method value) { reinterpret_cast<C64*>(c64)->setSamplingMethod((sampling_method)value); }
+    SID_chip_model c64_getChipModel(VC64 *c64) { return (SID_chip_model)(reinterpret_cast<C64*>(c64)->getChipModel()); }
+    void c64_setChipModel(VC64 *c64, SID_chip_model value) { reinterpret_cast<C64*>(c64)->setChipModel((chip_model)value); }
     void c64_run(VC64 *c64) { reinterpret_cast<C64*>(c64)->run(); }
     void c64_threadCleanup(VC64 *c64) { reinterpret_cast<C64*>(c64)->threadCleanup(); } // TODO: MAKE PRIVATE
     bool c64_isRunnable(VC64 *c64) { return reinterpret_cast<C64*>(c64)->isRunnable(); }

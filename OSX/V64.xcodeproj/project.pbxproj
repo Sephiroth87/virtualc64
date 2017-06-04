@@ -253,6 +253,7 @@
 		50032EB01BC919D90050BEEA /* MyMetalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMetalView.h; sourceTree = "<group>"; };
 		50032EB11BC919D90050BEEA /* MyMetalView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyMetalView.mm; sourceTree = "<group>"; };
 		50055CEB1EE462C600E6B654 /* CPU_defs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPU_defs.h; sourceTree = "<group>"; };
+		50055CEC1EE46D8500E6B654 /* ReSID_defs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReSID_defs.h; sourceTree = "<group>"; };
 		500B6CA30B905CEC002C36EC /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		500B6CA40B905CEC002C36EC /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
 		500EC04F10E4DCC4005A19A3 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -645,6 +646,7 @@
 				506D39D3141780FF00268AF6 /* SIDWrapper.h */,
 				506D39D1141780E500268AF6 /* SIDWrapper.cpp */,
 				506D39D5141788E700268AF6 /* ReSID.h */,
+				50055CEC1EE46D8500E6B654 /* ReSID_defs.h */,
 				506D39D4141788E600268AF6 /* ReSID.cpp */,
 				50CA0D500A9076FD00A5A08D /* OldSID.h */,
 				50CA0D510A9076FD00A5A08D /* OldSID.cpp */,

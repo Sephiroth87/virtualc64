@@ -23,6 +23,7 @@
 
 #include "basic.h"
 #include "VirtualComponent.h"
+#include "Memory_defs.h"
 
 // Forward declarations
 class CPU;
@@ -34,16 +35,7 @@ public:
 	// --------------------------------------------------------------------------------
 	//                                Constant definitions
 	// --------------------------------------------------------------------------------
-	
-	/*! @brief    Memory type
-	 *  @details  This datatype defines a constant value for the different kinds of memory.
-     */
-	enum MemoryType {
-		MEM_RAM,
-		MEM_ROM,
-		MEM_IO
-	};
-	
+		
 	//! @brief    Returns true, if the specified address is a valid memory address.
 	virtual bool isValidAddr(uint16_t addr, MemoryType type) = 0;
 	

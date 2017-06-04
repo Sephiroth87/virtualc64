@@ -168,6 +168,23 @@ extern "C"
         reinterpret_cast<C64*>(c64)->cpu.toggleSoftBreakpoint(addr); }
 
     
+    // --------------------------------------------------------------------------
+    //                                   Memory
+    // --------------------------------------------------------------------------
+    
+    void mem_dumpState(VC64 *c64) { reinterpret_cast<C64*>(c64)->mem.dumpState(); }
+    uint8_t mem_peek(VC64 *c64, uint16_t addr) { return reinterpret_cast<C64*>(c64)->mem.peek(addr); }
+    uint16_t mem_peekWord(VC64 *c64, uint16_t addr) { return reinterpret_cast<C64*>(c64)->mem.peekWord(addr); }
+    uint8_t mem_peekFrom(VC64 *c64, uint16_t addr, MemoryType type) { return reinterpret_cast<C64*>(c64)->mem.peekFrom(addr, type); }
+    void mem_poke(VC64 *c64, uint16_t addr, uint8_t val) { reinterpret_cast<C64*>(c64)->mem.poke(addr, val); }
+    void mem_pokeTo(VC64 *c64, uint16_t addr, uint8_t val, MemoryType type) { reinterpret_cast<C64*>(c64)->mem.pokeTo(addr, val, type); }
+    bool mem_isValidAddr(VC64 *c64, uint16_t addr, MemoryType type) { return reinterpret_cast<C64*>(c64)->mem.isValidAddr(addr, type); }
+    
+    
+    // --------------------------------------------------------------------------
+    //                                    VIC
+    // --------------------------------------------------------------------------
+
     
     // -----------------------------------------------------------------------------------------------
     //                                             Message

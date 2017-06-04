@@ -383,6 +383,7 @@
 		509AEAFD0C325EFB001FC9FD /* P00Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = P00Archive.h; sourceTree = "<group>"; };
 		509AEAFE0C325EFB001FC9FD /* P00Archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = P00Archive.cpp; sourceTree = "<group>"; };
 		509DF2470A9F681900AE0859 /* keyboard32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keyboard32.png; sourceTree = "<group>"; };
+		509EF7111EE47F9800E61143 /* Memory_defs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Memory_defs.h; sourceTree = "<group>"; };
 		50A0E0200A8F33120067714C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
 		50A3E0890E66F7BC00D3564D /* play32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play32.png; sourceTree = "<group>"; };
@@ -784,6 +785,7 @@
 			isa = PBXGroup;
 			children = (
 				50176C5C0A6F72F3009E80BD /* Memory.h */,
+				509EF7111EE47F9800E61143 /* Memory_defs.h */,
 				50176C5B0A6F72F3009E80BD /* Memory.cpp */,
 				5000C80E0D13CE680011A2E9 /* C64Memory.h */,
 				5000C80D0D13CE680011A2E9 /* C64Memory.cpp */,

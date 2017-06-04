@@ -97,10 +97,10 @@
 
 - (uint8_t) peek:(uint16_t)addr { return mem->peek(addr); }
 - (uint16_t) peekWord:(uint16_t)addr { return mem->peekWord(addr); }
-- (uint8_t) peekFrom:(uint16_t)addr memtype:(Memory::MemoryType)type { return mem->peekFrom(addr, type); }
+- (uint8_t) peekFrom:(uint16_t)addr memtype:(MemoryType)type { return mem->peekFrom(addr, type); }
 - (void) poke:(uint16_t)addr value:(uint8_t)val { mem->poke(addr, val); }
-- (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(Memory::MemoryType)type { mem->pokeTo(addr, val, type); }
-- (bool) isValidAddr:(uint16_t)addr memtype:(Memory::MemoryType)type { return mem->isValidAddr(addr, type); }
+- (void) pokeTo:(uint16_t)addr value:(uint8_t)val memtype:(MemoryType)type { mem->pokeTo(addr, val, type); }
+- (bool) isValidAddr:(uint16_t)addr memtype:(MemoryType)type { return mem->isValidAddr(addr, type); }
 
 @end
 

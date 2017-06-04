@@ -2,6 +2,7 @@
  * @header      VirtualC64.h
  * @author      Dirk W. Hoffmann, www.dirkwhoffmann.de
  * @copyright   2017 Dirk W. Hoffmann
+ * @brief       C level API for VirtualC64
  */
 /*              This program is free software; you can redistribute it and/or modify
  *              it under the terms of the GNU General Public License as published by
@@ -18,16 +19,13 @@
  *              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-// -----------------------------------------------------------------------------------------------
-//                                  C level API for VirtualC64
-// -----------------------------------------------------------------------------------------------
-
 #ifndef VirtualC64_h
 #define VirtualC64_h
 
 #include <stdint.h>
 #include "CPU_defs.h"
 #include "ReSID_defs.h"
+#include "Memory_defs.h"
 
 // From ReSID
 // enum chip_model { MOS6581, MOS8580 };
@@ -166,6 +164,24 @@ extern "C" {
     void cpu_setSoftBreakpoint(VC64 *c64, int addr);
     void cpu_deleteSoftBreakpoint(VC64 *c64, int addr);
     void cpu_toggleSoftBreakpoint(VC64 *c64, int addr);
+    
+    // --------------------------------------------------------------------------
+    //                                   Memory
+    // --------------------------------------------------------------------------
+    
+    void mem_dumpState(VC64 *c64);
+    uint8_t mem_peek(VC64 *c64, uint16_t addr);
+    uint16_t mem_peekWord(VC64 *c64, uint16_t addr);
+    uint8_t mem_peekFrom(VC64 *c64, uint16_t addr, MemoryType type);
+    void mem_poke(VC64 *c64, uint16_t addr, uint8_t val);
+    void mem_pokeTo(VC64 *c64, uint16_t addr, uint8_t val, MemoryType type);
+    bool mem_isValidAddr(VC64 *c64, uint16_t addr, MemoryType type);
+ 
+    
+    // -----------------------------------------------------------------------------------------------
+    //                                             VIC
+    // -----------------------------------------------------------------------------------------------
+
     
     
 // -----------------------------------------------------------------------------------------------

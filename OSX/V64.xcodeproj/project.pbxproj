@@ -38,8 +38,8 @@
 		50176C680A6F72F3009E80BD /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C590A6F72F3009E80BD /* Keyboard.cpp */; };
 		50176C690A6F72F3009E80BD /* Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5B0A6F72F3009E80BD /* Memory.cpp */; };
 		50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50176C5F0A6F72F3009E80BD /* VIC.cpp */; };
-		50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C710A6F7357009E80BD /* Disassembler.mm */; };
-		50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C730A6F7357009E80BD /* Formatter.mm */; };
+		50176C7C0A6F7357009E80BD /* Disassembler.m in Sources */ = {isa = PBXBuildFile; fileRef = 50176C710A6F7357009E80BD /* Disassembler.m */; };
+		50176C7D0A6F7357009E80BD /* Formatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 50176C730A6F7357009E80BD /* Formatter.m */; };
 		50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C760A6F7357009E80BD /* MyDocument.mm */; };
 		50176C800A6F7357009E80BD /* MyOpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C780A6F7357009E80BD /* MyOpenGLView.mm */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
@@ -282,9 +282,9 @@
 		50176C5F0A6F72F3009E80BD /* VIC.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = VIC.cpp; sourceTree = "<group>"; };
 		50176C600A6F72F3009E80BD /* VIC.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = VIC.h; sourceTree = "<group>"; };
 		50176C700A6F7357009E80BD /* Disassembler.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Disassembler.h; sourceTree = "<group>"; };
-		50176C710A6F7357009E80BD /* Disassembler.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = Disassembler.mm; sourceTree = "<group>"; };
+		50176C710A6F7357009E80BD /* Disassembler.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = Disassembler.m; sourceTree = "<group>"; };
 		50176C720A6F7357009E80BD /* Formatter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = Formatter.h; sourceTree = "<group>"; };
-		50176C730A6F7357009E80BD /* Formatter.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = Formatter.mm; sourceTree = "<group>"; };
+		50176C730A6F7357009E80BD /* Formatter.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = Formatter.m; sourceTree = "<group>"; };
 		50176C750A6F7357009E80BD /* MyDocument.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = MyDocument.h; sourceTree = "<group>"; };
 		50176C760A6F7357009E80BD /* MyDocument.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 30; path = MyDocument.mm; sourceTree = "<group>"; };
 		50176C770A6F7357009E80BD /* MyOpenGLView.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = MyOpenGLView.h; sourceTree = "<group>"; };
@@ -696,9 +696,9 @@
 			children = (
 				50C8924D1BEF35FB00231B96 /* MetalView */,
 				50176C700A6F7357009E80BD /* Disassembler.h */,
-				50176C710A6F7357009E80BD /* Disassembler.mm */,
+				50176C710A6F7357009E80BD /* Disassembler.m */,
 				50176C720A6F7357009E80BD /* Formatter.h */,
-				50176C730A6F7357009E80BD /* Formatter.mm */,
+				50176C730A6F7357009E80BD /* Formatter.m */,
 				5077743112DE490B00D72088 /* CpuTableView.h */,
 				5077743212DE490B00D72088 /* CpuTableView.mm */,
 				5077742E12DE490300D72088 /* MemTableView.h */,
@@ -1084,6 +1084,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0830;
+				TargetAttributes = {
+					8D15AC270486D014006FF6A4 = {
+						LastSwiftMigration = 0830;
+					};
+				};
 			};
 			buildConfigurationList = 504F836D0A89E0D2009FA225 /* Build configuration list for PBXProject "V64" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1212,8 +1217,8 @@
 				506004661B78E9C500EBDD93 /* PixelEngine.cpp in Sources */,
 				50176C690A6F72F3009E80BD /* Memory.cpp in Sources */,
 				50176C6B0A6F72F3009E80BD /* VIC.cpp in Sources */,
-				50176C7C0A6F7357009E80BD /* Disassembler.mm in Sources */,
-				50176C7D0A6F7357009E80BD /* Formatter.mm in Sources */,
+				50176C7C0A6F7357009E80BD /* Disassembler.m in Sources */,
+				50176C7D0A6F7357009E80BD /* Formatter.m in Sources */,
 				50176C7F0A6F7357009E80BD /* MyDocument.mm in Sources */,
 				5042312C1BD371FF00B3DEF9 /* MyMetalViewResponder.mm in Sources */,
 				50C9CB131B81E3130054EE86 /* C64ProxyColors.mm in Sources */,
@@ -1345,6 +1350,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1368,6 +1374,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1377,6 +1384,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
 				PRODUCT_NAME = VirtualC64;
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "MacGUI/VirtualC64-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -1386,6 +1396,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1408,6 +1419,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1417,6 +1429,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
 				PRODUCT_NAME = VirtualC64;
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "MacGUI/VirtualC64-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -1427,6 +1441,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1448,6 +1463,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[arch=*]" = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1458,6 +1474,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
 				PRODUCT_NAME = VirtualC64;
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "MacGUI/VirtualC64-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Default;

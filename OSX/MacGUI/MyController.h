@@ -17,6 +17,8 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#include "VirtualC64.h"
+
 
 // Forward declarations
 @class C64Proxy;
@@ -31,7 +33,9 @@
 @class CpuTableView;
 @class MemTableView;
 @class Speedometer;
-@class Server;
+@class CheatboxImageBrowserView;
+// @class Server;
+
 
 enum INPUT_DEVICES {
     IPD_UNCONNECTED = 0,
@@ -310,7 +314,7 @@ enum INPUT_DEVICES {
 
 // Timer and message processing
 - (void)timerFunc;
-- (void)processMessage:(Message *)msg;
+- (void)processMessage:(VC64_Message *)msg;
 
 // Refresh
 - (void)refresh;
@@ -337,7 +341,7 @@ enum INPUT_DEVICES {
 - (bool)showMediaDialog;
 - (IBAction)cancelMediaDialog:(id)sender;
 
-- (bool)showRomDialog:(Message *)msg;
+- (bool)showRomDialog:(VC64_Message *)msg;
 - (IBAction)cancelRomDialog:(id)sender;
 
 - (bool)showMountDialog;

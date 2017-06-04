@@ -21,7 +21,10 @@
 #include "VirtualC64.h"
 #include "C64.h"
 
-extern "C" {
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
     // -----------------------------------------------------------------------------------------------
     //                                             C64
@@ -93,9 +96,22 @@ extern "C" {
     bool c64_isCartridgeAttached(VC64 *c64) { return reinterpret_cast<C64*>(c64)->isCartridgeAttached(); }
     VC64_Message *c64_getMessage(VC64 *c64) {
         return reinterpret_cast<VC64_Message*>(reinterpret_cast<C64*>(c64)->getMessage()); }
-    void c64_putMessage(VC64 *c64, int id, int i, void *p, const char *c) {
+    void c64_putMessage(VC64 *c64, int id) {
+        reinterpret_cast<C64*>(c64)->putMessage(id); }
+    void c64_putCustomMessage(VC64 *c64, int id, int i, void *p, const char *c) {
         reinterpret_cast<C64*>(c64)->putMessage(id, i, p, c); }
 
     
+    // -----------------------------------------------------------------------------------------------
+    //                                             Message
+    // -----------------------------------------------------------------------------------------------
     
+    int message_id(VC64_Message *msg) { return reinterpret_cast<Message*>(msg)->id; }
+    char *message_c(VC64_Message *msg) { return reinterpret_cast<Message*>(msg)->c; };
+    int message_i(VC64_Message *msg) { return reinterpret_cast<Message*>(msg)->i; };
+    void *message_p(VC64_Message *msg) { return reinterpret_cast<Message*>(msg)->p; };
+
+    
+#ifdef __cplusplus
 }
+#endif

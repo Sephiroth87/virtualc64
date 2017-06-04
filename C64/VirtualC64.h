@@ -26,8 +26,10 @@
 #define VirtualC64_h
 
 #include <stdlib.h>
-// #include <stdint.h>
-#include "resid/siddefs.h"
+
+// From ReSID
+// enum chip_model { MOS6581, MOS8580 };
+// enum sampling_method { SAMPLE_FAST, SAMPLE_INTERPOLATE, SAMPLE_RESAMPLE_INTERPOLATE, SAMPLE_RESAMPLE_FAST };
 
 
 // -----------------------------------------------------------------------------------------------
@@ -47,8 +49,9 @@ struct VC64_Cartridge; typedef struct VC64_Cartridge VC64_Cartridge;
 //                                             C64
 // -----------------------------------------------------------------------------------------------
 
+#ifdef __cplusplus
 extern "C" {
-
+#endif
 
     VC64* c64_new();
     void c64_delete(VC64* c64);
@@ -65,10 +68,10 @@ extern "C" {
     void c64_setAudioFilter(VC64 *c64, bool value);
     bool c64_getReSID(VC64 *c64);
     void c64_setReSID(VC64 *c64, bool value);
-    sampling_method c64_getSamplingMethod(VC64 *c64);
-    void c64_setSamplingMethod(VC64 *c64, sampling_method value);
-    chip_model c64_getChipModel(VC64 *c64);
-    void c64_setChipModel(VC64 *c64, chip_model value);
+    // sampling_method c64_getSamplingMethod(VC64 *c64);
+    // void c64_setSamplingMethod(VC64 *c64, sampling_method value);
+    // chip_model c64_getChipModel(VC64 *c64);
+    // void c64_setChipModel(VC64 *c64, chip_model value);
     void c64_run(VC64 *c64);
     void c64_threadCleanup(VC64 *c64);
     bool c64_isRunnable(VC64 *c64);
@@ -108,15 +111,25 @@ extern "C" {
     void c64_detachCartridge(VC64 *c64);
     bool c64_isCartridgeAttached(VC64 *c64);
     VC64_Message *c64_getMessage(VC64 *c64);
-    void c64_putMessage(VC64 *c64, int id, int i = 0, void *p = NULL, const char *c = NULL);
+    void c64_putMessage(VC64 *c64, int id);
+    void c64_putCustomMessage(VC64 *c64, int id, int i, void *p, const char *c);
+
     
-    
-    
-    
-    
+// -----------------------------------------------------------------------------------------------
+//                                             Message
+// -----------------------------------------------------------------------------------------------
+
+int message_id(VC64_Message *msg);
+char *message_c(VC64_Message *msg);
+int message_i(VC64_Message *msg);
+void *message_p(VC64_Message *msg);
+
+
 // To be continued
 
+#ifdef __cplusplus
 }
+#endif
 
 
 

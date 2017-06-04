@@ -17,6 +17,7 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "C64.h"
 
 // Forward declarations
 @class MyController;
